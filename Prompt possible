@@ -1,5 +1,3 @@
-### Prompt finalisé pour l'IA (format identique et ton au document original)
-
 **PROMPT EMERGENT — WEALTHIA · SESSION DE TRAVAIL**
 
 ---
@@ -208,11 +206,3 @@ Guide pas à pas adapté à l'architecture recommandée, en deux scénarios :
 ⚠️ Tu n'écris aucune ligne de code tant que je n'ai pas validé le plan.
 
 ---
-
-### Extrait du document (1–2 phrases)  
-**K. Back-office Admin** — *Interface admin sécurisée (accès restreint, authentification renforcée).*  
-**Gestion utilisateurs** — *liste, statut, palier, actions.*
-
----
-
-Si vous souhaitez que j'ajuste le libellé (par ex. changer les limites exactes des paliers multi‑utilisateurs, définir la récompense par défaut du parrainage, ou ajouter des messages UX types pour l'onboarding des budgets partagés), dites‑moi quelles valeurs vous préférez et j'intègre les modifications directement dans le prompt final.
