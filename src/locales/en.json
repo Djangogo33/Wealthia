@@ -36,6 +36,34 @@
     "monthExpenses": "Monthly Expenses",
     "percentOfTotal": "{{p}}% of total"
   },
+  "transactions": {
+    "title": "Transactions",
+    "filter": { "all": "All", "income": "Income", "expense": "Expenses" },
+    "empty": "No transactions",
+    "emptyHint": "Add your first expense with the + button",
+    "loadMore": "Load more",
+    "aiBadge": "AI",
+    "add": {
+      "titleExpense": "New expense",
+      "titleIncome": "New income",
+      "type": { "expense": "Expense", "income": "Income" },
+      "amount": "Amount",
+      "label": "Label",
+      "labelPlaceholder": "e.g. Carrefour, Rent…",
+      "category": "Category",
+      "account": "Account",
+      "date": "Date",
+      "notes": "Notes",
+      "addNote": "Add a note",
+      "submit": "Add",
+      "noAccount": "Create an account first"
+    },
+    "delete": {
+      "confirm": "Delete this transaction?",
+      "cancel": "Cancel",
+      "confirmCta": "Delete"
+    }
+  },
   "paywall": {
     "title": "Upgrade your plan",
     "subtitle": "This feature is available to subscribers.",
