@@ -23,6 +23,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { aiCategorizeTransaction } from "@/lib/transactions.functions";
+import { useDemo } from "@/hooks/use-demo";
+import { demoAccounts, demoTransactions } from "@/data/demo";
 import type { Database } from "@/integrations/supabase/types";
 
 type TxType = "expense" | "income";
@@ -65,6 +67,7 @@ export const Route = createFileRoute("/_authenticated/transactions")({
 function TransactionsPage() {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const { isDemo } = useDemo();
   const qc = useQueryClient();
   const [filter, setFilter] = useState<Filter>("all");
   const [limit, setLimit] = useState(PAGE_SIZE);
@@ -72,9 +75,30 @@ function TransactionsPage() {
   const [pendingDelete, setPendingDelete] = useState<Tx | null>(null);
 
   const txQuery = useQuery({
-    queryKey: ["transactions", user?.id, filter, limit],
-    enabled: !!user,
+    queryKey: ["transactions", isDemo ? "demo" : user?.id, filter, limit],
+    enabled: isDemo || !!user,
     queryFn: async () => {
+      if (isDemo) {
+        const filtered = demoTransactions
+          .filter((tx) => filter === "all" || tx.type === filter)
+          .slice()
+          .sort((a, b) => (a.date < b.date ? 1 : -1))
+          .slice(0, limit);
+        return filtered.map((tx) => ({
+          id: tx.id,
+          amount: tx.amount,
+          label: tx.label,
+          type: tx.type,
+          date: tx.date,
+          notes: null,
+          ai_categorized: tx.ai_categorized,
+          account_id: tx.account,
+          category_id: tx.category,
+          created_at: tx.date,
+          category: { name: tx.category },
+          account: { name: tx.account },
+        })) as Tx[];
+      }
       let q = supabase
         .from("transactions")
         .select(
@@ -92,9 +116,17 @@ function TransactionsPage() {
   });
 
   const accountsQuery = useQuery({
-    queryKey: ["accounts", user?.id],
-    enabled: !!user,
+    queryKey: ["accounts", isDemo ? "demo" : user?.id],
+    enabled: isDemo || !!user,
     queryFn: async () => {
+      if (isDemo) {
+        return demoAccounts.map((a) => ({
+          id: a.id,
+          name: a.name,
+          type: a.type,
+          balance: a.balance,
+        })) as Account[];
+      }
       const { data, error } = await supabase
         .from("accounts")
         .select("id,name,type,balance")
@@ -105,9 +137,10 @@ function TransactionsPage() {
   });
 
   const categoriesQuery = useQuery({
-    queryKey: ["categories", user?.id],
-    enabled: !!user,
+    queryKey: ["categories", isDemo ? "demo" : user?.id],
+    enabled: isDemo || !!user,
     queryFn: async () => {
+      if (isDemo) return [] as Category[];
       const { data, error } = await supabase
         .from("categories")
         .select("id,name,icon,color,type")
@@ -119,6 +152,10 @@ function TransactionsPage() {
 
   const deleteMutation = useMutation({
     mutationFn: async (tx: Tx) => {
+      if (isDemo) {
+        toast.info(t("demo.writeBlocked"));
+        return;
+      }
       const { error } = await supabase
         .from("transactions")
         .update({ deleted_at: new Date().toISOString() })
@@ -153,7 +190,7 @@ function TransactionsPage() {
       <header className="mb-6 flex items-center justify-between">
         <h1 className="text-4xl font-semibold tracking-tight">{t("transactions.title")}</h1>
         <button
-          onClick={() => setAddOpen(true)}
+          onClick={() => (isDemo ? toast.info(t("demo.writeBlocked")) : setAddOpen(true))}
           aria-label={t("transactions.add.submit")}
           className="grid h-12 w-12 place-items-center rounded-full bg-[var(--foreground)] text-[var(--background)] shadow-md transition active:scale-95"
         >

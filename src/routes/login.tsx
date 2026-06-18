@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { useAuth } from "@/hooks/use-auth";
+import { useDemo } from "@/hooks/use-demo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,10 +16,17 @@ export const Route = createFileRoute("/login")({ ssr: false, component: LoginPag
 function LoginPage() {
   const { t } = useTranslation();
   const { session } = useAuth();
+  const { enableDemo } = useDemo();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
+
+  function startDemo() {
+    enableDemo();
+    navigate({ to: "/" });
+  }
+
 
   useEffect(() => {
     if (session) navigate({ to: "/" });
@@ -83,6 +91,12 @@ function LoginPage() {
             {t("auth.magicLink")}
           </button>
         </div>
+        <button
+          onClick={startDemo}
+          className="mt-5 w-full rounded-xl border border-[var(--gold)] bg-transparent px-4 py-3 text-sm font-medium text-[var(--gold)] transition hover:bg-[var(--gold)]/10"
+        >
+          {t("demo.button")}
+        </button>
         <p className="mt-6 text-center text-sm text-[var(--muted-foreground)]">
           {t("auth.noAccount")} <Link to="/signup" className="text-[var(--gold)]">{t("auth.signup")}</Link>
         </p>

@@ -1,7 +1,8 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { Home, ArrowLeftRight, Wallet, TrendingUp, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import logoAsset from "@/assets/wealthia-logo.png.asset.json";
+import { useDemo } from "@/hooks/use-demo";
 import type { ReactNode } from "react";
 
 const items = [
@@ -15,9 +16,27 @@ const items = [
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const { isDemo, disableDemo } = useDemo();
+  const navigate = useNavigate();
+
+  function exitToSignup() {
+    disableDemo();
+    navigate({ to: "/signup" });
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {isDemo && (
+        <div
+          className="sticky top-0 z-30 flex h-10 w-full items-center justify-between gap-3 px-4 text-xs font-medium lg:pl-[256px]"
+          style={{ background: "#C8B99A", color: "#0D0D0D" }}
+        >
+          <span className="truncate">✦ {t("demo.banner")}</span>
+          <button onClick={exitToSignup} className="shrink-0 underline underline-offset-2">
+            {t("demo.cta")}
+          </button>
+        </div>
+      )}
       {/* Desktop sidebar */}
       <aside className="fixed inset-y-0 left-0 z-20 hidden w-[240px] flex-col border-r border-[var(--border)] bg-[var(--card)] px-4 py-6 lg:flex">
         <div className="mb-8 flex items-center gap-3 px-2">
