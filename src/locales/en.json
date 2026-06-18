@@ -76,5 +76,12 @@
     "manage": "Manage subscription",
     "later": "Later"
   },
-  "stub": { "soon": "Coming soon", "soonDesc": "This section arrives in the next prompt." }
+  "stub": { "soon": "Coming soon", "soonDesc": "This section arrives in the next prompt." },
+  "demo": {
+    "button": "✦ Try the demo",
+    "banner": "Demo Mode — your data is not saved",
+    "cta": "Sign up free →",
+    "writeBlocked": "Action disabled in demo mode"
+  },
+  "auth.forgotPassword": "Forgot password?"
 }
