@@ -7,6 +7,8 @@ import { Plus, PieChart, Sparkles, TrendingUp, CreditCard, Wallet, BarChart3 } f
 import { useState } from "react";
 import { PaywallModal } from "@/components/paywall-modal";
 import { useFeatureGate } from "@/hooks/use-feature-gate";
+import { useDemo } from "@/hooks/use-demo";
+import { demoAccounts, demoTransactions, demoUser } from "@/data/demo";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/")({
