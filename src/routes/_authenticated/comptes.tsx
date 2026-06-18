@@ -1,0 +1,17 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
+
+export const Route = createFileRoute("/_authenticated/comptes")({
+  component: () => {
+    const { t } = useTranslation();
+    return (
+      <div className="mx-auto max-w-3xl px-5 pt-8">
+        <h1 className="text-4xl font-semibold tracking-tight">Mes Comptes</h1>
+        <div className="card-surface mt-6 p-6">
+          <div className="label-caps">{t("stub.soon")}</div>
+          <p className="mt-2 text-sm text-[var(--muted-foreground)]">{t("stub.soonDesc")}</p>
+        </div>
+      </div>
+    );
+  },
+});
