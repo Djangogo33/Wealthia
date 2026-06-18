@@ -9,50 +9,250 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedTransactionsRouteImport } from './routes/_authenticated/transactions'
+import { Route as AuthenticatedConseillerRouteImport } from './routes/_authenticated/conseiller'
+import { Route as AuthenticatedComptesRouteImport } from './routes/_authenticated/comptes'
+import { Route as AuthenticatedBourseRouteImport } from './routes/_authenticated/bourse'
+import { Route as ApiStripeCreateCheckoutSessionRouteImport } from './routes/api/stripe/create-checkout-session'
+import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe/webhook'
 
-const IndexRoute = IndexRouteImport.update({
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedTransactionsRoute =
+  AuthenticatedTransactionsRouteImport.update({
+    id: '/transactions',
+    path: '/transactions',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedConseillerRoute = AuthenticatedConseillerRouteImport.update({
+  id: '/conseiller',
+  path: '/conseiller',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedComptesRoute = AuthenticatedComptesRouteImport.update({
+  id: '/comptes',
+  path: '/comptes',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedBourseRoute = AuthenticatedBourseRouteImport.update({
+  id: '/bourse',
+  path: '/bourse',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const ApiStripeCreateCheckoutSessionRoute =
+  ApiStripeCreateCheckoutSessionRouteImport.update({
+    id: '/api/stripe/create-checkout-session',
+    path: '/api/stripe/create-checkout-session',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
+  id: '/api/public/stripe/webhook',
+  path: '/api/public/stripe/webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
+  '/bourse': typeof AuthenticatedBourseRoute
+  '/comptes': typeof AuthenticatedComptesRoute
+  '/conseiller': typeof AuthenticatedConseillerRoute
+  '/transactions': typeof AuthenticatedTransactionsRoute
+  '/api/stripe/create-checkout-session': typeof ApiStripeCreateCheckoutSessionRoute
+  '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
+  '/bourse': typeof AuthenticatedBourseRoute
+  '/comptes': typeof AuthenticatedComptesRoute
+  '/conseiller': typeof AuthenticatedConseillerRoute
+  '/transactions': typeof AuthenticatedTransactionsRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/api/stripe/create-checkout-session': typeof ApiStripeCreateCheckoutSessionRoute
+  '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
+  '/_authenticated/bourse': typeof AuthenticatedBourseRoute
+  '/_authenticated/comptes': typeof AuthenticatedComptesRoute
+  '/_authenticated/conseiller': typeof AuthenticatedConseillerRoute
+  '/_authenticated/transactions': typeof AuthenticatedTransactionsRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/api/stripe/create-checkout-session': typeof ApiStripeCreateCheckoutSessionRoute
+  '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/bourse'
+    | '/comptes'
+    | '/conseiller'
+    | '/transactions'
+    | '/api/stripe/create-checkout-session'
+    | '/api/public/stripe/webhook'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/login'
+    | '/signup'
+    | '/bourse'
+    | '/comptes'
+    | '/conseiller'
+    | '/transactions'
+    | '/'
+    | '/api/stripe/create-checkout-session'
+    | '/api/public/stripe/webhook'
+  id:
+    | '__root__'
+    | '/_authenticated'
+    | '/login'
+    | '/signup'
+    | '/_authenticated/bourse'
+    | '/_authenticated/comptes'
+    | '/_authenticated/conseiller'
+    | '/_authenticated/transactions'
+    | '/_authenticated/'
+    | '/api/stripe/create-checkout-session'
+    | '/api/public/stripe/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  SignupRoute: typeof SignupRoute
+  ApiStripeCreateCheckoutSessionRoute: typeof ApiStripeCreateCheckoutSessionRoute
+  ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/': {
+      id: '/_authenticated/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/transactions': {
+      id: '/_authenticated/transactions'
+      path: '/transactions'
+      fullPath: '/transactions'
+      preLoaderRoute: typeof AuthenticatedTransactionsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/conseiller': {
+      id: '/_authenticated/conseiller'
+      path: '/conseiller'
+      fullPath: '/conseiller'
+      preLoaderRoute: typeof AuthenticatedConseillerRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/comptes': {
+      id: '/_authenticated/comptes'
+      path: '/comptes'
+      fullPath: '/comptes'
+      preLoaderRoute: typeof AuthenticatedComptesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/bourse': {
+      id: '/_authenticated/bourse'
+      path: '/bourse'
+      fullPath: '/bourse'
+      preLoaderRoute: typeof AuthenticatedBourseRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/api/stripe/create-checkout-session': {
+      id: '/api/stripe/create-checkout-session'
+      path: '/api/stripe/create-checkout-session'
+      fullPath: '/api/stripe/create-checkout-session'
+      preLoaderRoute: typeof ApiStripeCreateCheckoutSessionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/stripe/webhook': {
+      id: '/api/public/stripe/webhook'
+      path: '/api/public/stripe/webhook'
+      fullPath: '/api/public/stripe/webhook'
+      preLoaderRoute: typeof ApiPublicStripeWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedBourseRoute: typeof AuthenticatedBourseRoute
+  AuthenticatedComptesRoute: typeof AuthenticatedComptesRoute
+  AuthenticatedConseillerRoute: typeof AuthenticatedConseillerRoute
+  AuthenticatedTransactionsRoute: typeof AuthenticatedTransactionsRoute
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedBourseRoute: AuthenticatedBourseRoute,
+  AuthenticatedComptesRoute: AuthenticatedComptesRoute,
+  AuthenticatedConseillerRoute: AuthenticatedConseillerRoute,
+  AuthenticatedTransactionsRoute: AuthenticatedTransactionsRoute,
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  LoginRoute: LoginRoute,
+  SignupRoute: SignupRoute,
+  ApiStripeCreateCheckoutSessionRoute: ApiStripeCreateCheckoutSessionRoute,
+  ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
