@@ -1,0 +1,52 @@
+{
+  "app": { "name": "Wealthia", "tagline": "Gestion de Patrimoine" },
+  "nav": {
+    "home": "Accueil",
+    "transactions": "Transactions",
+    "accounts": "Comptes",
+    "stocks": "Bourse",
+    "advisor": "Conseiller"
+  },
+  "auth": {
+    "login": "Connexion",
+    "signup": "Créer un compte",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "name": "Nom",
+    "magicLink": "Recevoir un lien magique",
+    "google": "Continuer avec Google",
+    "or": "ou",
+    "noAccount": "Pas encore de compte ?",
+    "haveAccount": "Déjà inscrit ?",
+    "magicSent": "Lien magique envoyé. Vérifiez votre boîte mail.",
+    "signOut": "Se déconnecter"
+  },
+  "home": {
+    "hello": "Bonjour",
+    "overview": "Aperçu de votre patrimoine",
+    "totalBalance": "Solde total",
+    "income": "Revenus",
+    "expenses": "Dépenses",
+    "quickAdd": "Ajouter",
+    "quickReports": "Rapports",
+    "quickAI": "IA",
+    "quickStocks": "Bourse",
+    "myAccounts": "Mes Comptes",
+    "seeAll": "Voir tout",
+    "monthExpenses": "Dépenses du Mois",
+    "percentOfTotal": "{{p}}% du total"
+  },
+  "paywall": {
+    "title": "Passez à un plan supérieur",
+    "subtitle": "Cette fonctionnalité est réservée aux abonnés.",
+    "upgrade": "Passer à {{plan}}",
+    "free": "Gratuit",
+    "pro": "Pro",
+    "max": "Max",
+    "monthly": "/mois",
+    "yearly": "/an",
+    "manage": "Gérer mon abonnement",
+    "later": "Plus tard"
+  },
+  "stub": { "soon": "Bientôt disponible", "soonDesc": "Cette section arrive dans le prochain prompt." }
+}

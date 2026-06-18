@@ -1,0 +1,52 @@
+{
+  "app": { "name": "Wealthia", "tagline": "Wealth Management" },
+  "nav": {
+    "home": "Home",
+    "transactions": "Transactions",
+    "accounts": "Accounts",
+    "stocks": "Stocks",
+    "advisor": "Advisor"
+  },
+  "auth": {
+    "login": "Sign in",
+    "signup": "Create account",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "magicLink": "Send magic link",
+    "google": "Continue with Google",
+    "or": "or",
+    "noAccount": "No account yet?",
+    "haveAccount": "Already have an account?",
+    "magicSent": "Magic link sent. Check your inbox.",
+    "signOut": "Sign out"
+  },
+  "home": {
+    "hello": "Hello",
+    "overview": "Your wealth overview",
+    "totalBalance": "Total balance",
+    "income": "Income",
+    "expenses": "Expenses",
+    "quickAdd": "Add",
+    "quickReports": "Reports",
+    "quickAI": "AI",
+    "quickStocks": "Stocks",
+    "myAccounts": "My Accounts",
+    "seeAll": "See all",
+    "monthExpenses": "Monthly Expenses",
+    "percentOfTotal": "{{p}}% of total"
+  },
+  "paywall": {
+    "title": "Upgrade your plan",
+    "subtitle": "This feature is available to subscribers.",
+    "upgrade": "Upgrade to {{plan}}",
+    "free": "Free",
+    "pro": "Pro",
+    "max": "Max",
+    "monthly": "/mo",
+    "yearly": "/yr",
+    "manage": "Manage subscription",
+    "later": "Later"
+  },
+  "stub": { "soon": "Coming soon", "soonDesc": "This section arrives in the next prompt." }
+}
