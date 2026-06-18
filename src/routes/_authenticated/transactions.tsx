@@ -152,6 +152,10 @@ function TransactionsPage() {
 
   const deleteMutation = useMutation({
     mutationFn: async (tx: Tx) => {
+      if (isDemo) {
+        toast.info(t("demo.writeBlocked"));
+        return;
+      }
       const { error } = await supabase
         .from("transactions")
         .update({ deleted_at: new Date().toISOString() })
