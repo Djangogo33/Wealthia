@@ -134,8 +134,8 @@ function Accueil() {
         <div className="min-w-0">
           <h1 className="text-4xl font-semibold tracking-tight">{t("home.hello")}</h1>
           <p className="mt-1 text-sm text-[var(--muted-foreground)]">{t("home.overview")}</p>
-          {profile?.name && (
-            <p className="mt-0.5 text-xs uppercase tracking-widest text-[var(--muted-foreground)]">{profile.name}</p>
+          {(isDemo ? demoUser.name : profile?.name) && (
+            <p className="mt-0.5 text-xs uppercase tracking-widest text-[var(--muted-foreground)]">{isDemo ? demoUser.name : profile?.name}</p>
           )}
         </div>
         <button className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[var(--muted)] text-[var(--muted-foreground)]">
