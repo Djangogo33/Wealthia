@@ -26,14 +26,54 @@ const ICON_BY_TYPE: Record<string, typeof CreditCard> = {
 function Accueil() {
   const { t } = useTranslation();
   const { profile, user } = useAuth();
+  const { isDemo } = useDemo();
   const ai = useFeatureGate("ai_advisor");
   const [reportsOpen, setReportsOpen] = useState(false);
   const reportsGate = useFeatureGate("export_pdf");
 
   const stats = useQuery({
-    queryKey: ["home-stats", user?.id],
-    enabled: !!user,
+    queryKey: ["home-stats", isDemo ? "demo" : user?.id],
+    enabled: isDemo || !!user,
     queryFn: async () => {
+      if (isDemo) {
+        const totalBalance = demoAccounts.reduce((s, a) => s + a.balance, 0);
+        const now = new Date();
+        const monthStart = new Date(now.getFullYear(), now.getMonth(), 1)
+          .toISOString()
+          .slice(0, 10);
+        const monthTx = demoTransactions.filter((t) => t.date >= monthStart);
+        let income = 0;
+        let expenses = 0;
+        const catMap = new Map<string, { name: string; amount: number }>();
+        for (const tx of monthTx) {
+          if (tx.type === "income") income += tx.amount;
+          else {
+            expenses += tx.amount;
+            const cur = catMap.get(tx.category) ?? { name: tx.category, amount: 0 };
+            cur.amount += tx.amount;
+            catMap.set(tx.category, cur);
+          }
+        }
+        const categories = Array.from(catMap.values())
+          .sort((a, b) => b.amount - a.amount)
+          .slice(0, 5)
+          .map((c) => ({
+            ...c,
+            percent: expenses > 0 ? Math.round((c.amount / expenses) * 100) : 0,
+          }));
+        return {
+          totalBalance,
+          income,
+          expenses,
+          accounts: demoAccounts.slice(0, 4).map((a) => ({
+            id: a.id,
+            name: a.name,
+            type: a.type,
+            balance: a.balance,
+          })),
+          categories,
+        };
+      }
       const now = new Date();
       const monthStart = new Date(now.getFullYear(), now.getMonth(), 1)
         .toISOString()
