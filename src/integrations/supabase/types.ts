@@ -236,6 +236,7 @@ export type Database = {
           category_id: string | null
           created_at: string
           date: string
+          deleted_at: string | null
           id: string
           label: string
           notes: string | null
@@ -249,6 +250,7 @@ export type Database = {
           category_id?: string | null
           created_at?: string
           date?: string
+          deleted_at?: string | null
           id?: string
           label: string
           notes?: string | null
@@ -262,6 +264,7 @@ export type Database = {
           category_id?: string | null
           created_at?: string
           date?: string
+          deleted_at?: string | null
           id?: string
           label?: string
           notes?: string | null
