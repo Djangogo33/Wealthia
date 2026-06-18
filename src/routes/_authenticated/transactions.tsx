@@ -190,7 +190,7 @@ function TransactionsPage() {
       <header className="mb-6 flex items-center justify-between">
         <h1 className="text-4xl font-semibold tracking-tight">{t("transactions.title")}</h1>
         <button
-          onClick={() => setAddOpen(true)}
+          onClick={() => (isDemo ? toast.info(t("demo.writeBlocked")) : setAddOpen(true))}
           aria-label={t("transactions.add.submit")}
           className="grid h-12 w-12 place-items-center rounded-full bg-[var(--foreground)] text-[var(--background)] shadow-md transition active:scale-95"
         >
