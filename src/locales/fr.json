@@ -76,5 +76,12 @@
     "manage": "Gérer mon abonnement",
     "later": "Plus tard"
   },
-  "stub": { "soon": "Bientôt disponible", "soonDesc": "Cette section arrive dans le prochain prompt." }
+  "stub": { "soon": "Bientôt disponible", "soonDesc": "Cette section arrive dans le prochain prompt." },
+  "demo": {
+    "button": "✦ Essayer la démo gratuitement",
+    "banner": "Mode Démo — vos données ne sont pas sauvegardées",
+    "cta": "S'inscrire gratuitement →",
+    "writeBlocked": "Action désactivée en mode démo"
+  },
+  "auth.forgotPassword": "Mot de passe oublié ?"
 }
