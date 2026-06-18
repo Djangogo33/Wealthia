@@ -16,10 +16,17 @@ export const Route = createFileRoute("/login")({ ssr: false, component: LoginPag
 function LoginPage() {
   const { t } = useTranslation();
   const { session } = useAuth();
+  const { enableDemo } = useDemo();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
+
+  function startDemo() {
+    enableDemo();
+    navigate({ to: "/" });
+  }
+
 
   useEffect(() => {
     if (session) navigate({ to: "/" });
