@@ -91,6 +91,12 @@ function LoginPage() {
             {t("auth.magicLink")}
           </button>
         </div>
+        <button
+          onClick={startDemo}
+          className="mt-5 w-full rounded-xl border border-[var(--gold)] bg-transparent px-4 py-3 text-sm font-medium text-[var(--gold)] transition hover:bg-[var(--gold)]/10"
+        >
+          {t("demo.button")}
+        </button>
         <p className="mt-6 text-center text-sm text-[var(--muted-foreground)]">
           {t("auth.noAccount")} <Link to="/signup" className="text-[var(--gold)]">{t("auth.signup")}</Link>
         </p>
