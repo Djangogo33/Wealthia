@@ -23,6 +23,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { aiCategorizeTransaction } from "@/lib/transactions.functions";
+import { useDemo } from "@/hooks/use-demo";
+import { demoAccounts, demoTransactions } from "@/data/demo";
 import type { Database } from "@/integrations/supabase/types";
 
 type TxType = "expense" | "income";
