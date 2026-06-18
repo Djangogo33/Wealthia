@@ -36,6 +36,34 @@
     "monthExpenses": "Dépenses du Mois",
     "percentOfTotal": "{{p}}% du total"
   },
+  "transactions": {
+    "title": "Transactions",
+    "filter": { "all": "Toutes", "income": "Revenus", "expense": "Dépenses" },
+    "empty": "Aucune transaction",
+    "emptyHint": "Ajoutez votre première dépense avec le bouton +",
+    "loadMore": "Charger plus",
+    "aiBadge": "IA",
+    "add": {
+      "titleExpense": "Nouvelle dépense",
+      "titleIncome": "Nouveau revenu",
+      "type": { "expense": "Dépense", "income": "Revenu" },
+      "amount": "Montant",
+      "label": "Libellé",
+      "labelPlaceholder": "Ex: Carrefour, Loyer…",
+      "category": "Catégorie",
+      "account": "Compte",
+      "date": "Date",
+      "notes": "Notes",
+      "addNote": "Ajouter une note",
+      "submit": "Ajouter",
+      "noAccount": "Créez d'abord un compte"
+    },
+    "delete": {
+      "confirm": "Supprimer cette transaction ?",
+      "cancel": "Annuler",
+      "confirmCta": "Supprimer"
+    }
+  },
   "paywall": {
     "title": "Passez à un plan supérieur",
     "subtitle": "Cette fonctionnalité est réservée aux abonnés.",

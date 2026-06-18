@@ -1,0 +1,2 @@
+ALTER TABLE public.transactions ADD COLUMN IF NOT EXISTS deleted_at timestamp with time zone;
+CREATE INDEX IF NOT EXISTS transactions_user_date_idx ON public.transactions (user_id, date DESC, created_at DESC) WHERE deleted_at IS NULL;
