@@ -1,6 +1,6 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { Home, ArrowLeftRight, Wallet, TrendingUp, Sparkles } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "@/lib/strings";
 import logoAsset from "@/assets/wealthia-logo.png.asset.json";
 import { useDemo } from "@/hooks/use-demo";
 import type { ReactNode } from "react";
