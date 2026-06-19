@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "@/lib/strings";
 
 export const Route = createFileRoute("/_authenticated/bourse")({
   component: () => {

@@ -1,6 +1,6 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { Home, ArrowLeftRight, Wallet, TrendingUp, Sparkles } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "@/lib/strings";
 import logoAsset from "@/assets/wealthia-logo.png.asset.json";
 import { useDemo } from "@/hooks/use-demo";
 import type { ReactNode } from "react";
@@ -14,7 +14,7 @@ const items = [
 ] as const;
 
 export function AppShell({ children }: { children: ReactNode }) {
-  const { t } = useTranslation();
+  const { t, lang, setLanguage } = useTranslation();
   const path = useRouterState({ select: (s) => s.location.pathname });
   const { isDemo, disableDemo } = useDemo();
   const navigate = useNavigate();
@@ -23,6 +23,10 @@ export function AppShell({ children }: { children: ReactNode }) {
     disableDemo();
     navigate({ to: "/signup" });
   }
+
+  const toggleLang = () => setLanguage(lang === "fr" ? "en" : "fr");
+  const langLabel = lang === "fr" ? "🇬🇧 EN" : "🇫🇷 FR";
+
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -37,15 +41,33 @@ export function AppShell({ children }: { children: ReactNode }) {
           </button>
         </div>
       )}
+      {/* Mobile language toggle */}
+      <button
+        onClick={toggleLang}
+        aria-label="Change language"
+        className="fixed right-3 top-3 z-30 rounded-full border border-[var(--border)] bg-[var(--card)]/80 px-2.5 py-1 text-[10px] text-[var(--muted-foreground)] backdrop-blur lg:hidden"
+        style={isDemo ? { top: "2.75rem" } : undefined}
+      >
+        {langLabel}
+      </button>
       {/* Desktop sidebar */}
+
       <aside className="fixed inset-y-0 left-0 z-20 hidden w-[240px] flex-col border-r border-[var(--border)] bg-[var(--card)] px-4 py-6 lg:flex">
         <div className="mb-8 flex items-center gap-3 px-2">
           <img src={logoAsset.url} alt="Wealthia" className="h-9 w-9 rounded-full" />
-          <div>
+          <div className="flex-1 min-w-0">
             <div className="text-base font-semibold">{t("app.name")}</div>
             <div className="text-[10px] uppercase tracking-widest text-[var(--muted-foreground)]">{t("app.tagline")}</div>
           </div>
+          <button
+            onClick={toggleLang}
+            aria-label="Change language"
+            className="rounded-full border border-[var(--border)] px-2 py-1 text-[10px] text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+          >
+            {langLabel}
+          </button>
         </div>
+
         <nav className="flex flex-col gap-1">
           {items.map(({ to, icon: Icon, key }) => {
             const active = path === to;

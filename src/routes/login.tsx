@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "@/lib/strings";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { useAuth } from "@/hooks/use-auth";
@@ -14,7 +14,8 @@ import logoAsset from "@/assets/wealthia-logo.png.asset.json";
 export const Route = createFileRoute("/login")({ ssr: false, component: LoginPage });
 
 function LoginPage() {
-  const { t } = useTranslation();
+  const { t, lang, setLanguage } = useTranslation();
+
   const { session } = useAuth();
   const { enableDemo } = useDemo();
   const navigate = useNavigate();
@@ -60,7 +61,14 @@ function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-5">
+    <div className="relative flex min-h-screen items-center justify-center px-5">
+      <button
+        onClick={() => setLanguage(lang === "fr" ? "en" : "fr")}
+        className="absolute right-4 top-4 rounded-full border border-[var(--border)] px-2.5 py-1 text-[10px] text-[var(--muted-foreground)]"
+      >
+        {lang === "fr" ? "🇬🇧 EN" : "🇫🇷 FR"}
+      </button>
+
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center text-center">
           <img src={logoAsset.url} alt="Wealthia" className="h-16 w-16 rounded-full" />
