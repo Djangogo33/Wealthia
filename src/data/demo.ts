@@ -56,3 +56,42 @@ export const demoCategories = [
   "Revenus",
   "Autres revenus",
 ];
+
+export type DemoBudget = {
+  id: string;
+  category: string;
+  category_icon: string;
+  limit: number;
+  spent: number;
+  period: "monthly" | "weekly";
+};
+export const demoBudgets: DemoBudget[] = [
+  { id: "b1", category: "Alimentation", category_icon: "🛒", limit: 400, spent: 281.8, period: "monthly" },
+  { id: "b2", category: "Transport", category_icon: "🚇", limit: 150, spent: 42.0, period: "monthly" },
+  { id: "b3", category: "Loisirs", category_icon: "🎮", limit: 100, spent: 0, period: "monthly" },
+];
+
+export type DemoDebt = {
+  id: string;
+  label: string;
+  type: "debt" | "loan";
+  total_amount: number;
+  remaining_amount: number;
+  due_date: string | null;
+};
+export const demoDebts: DemoDebt[] = [
+  { id: "debt1", label: "Prêt voiture", type: "loan", total_amount: 8000, remaining_amount: 5400, due_date: "2028-01-01" },
+];
+
+export type DemoSubscription = {
+  id: string;
+  name: string;
+  amount: number;
+  frequency: "monthly" | "yearly" | "weekly";
+  next_billing_date: string;
+};
+export const demoSubscriptions: DemoSubscription[] = [
+  { id: "s1", name: "Netflix", amount: 13.99, frequency: "monthly", next_billing_date: "2026-07-01" },
+  { id: "s2", name: "Spotify", amount: 9.99, frequency: "monthly", next_billing_date: "2026-07-01" },
+  { id: "s3", name: "iCloud 50Go", amount: 0.99, frequency: "monthly", next_billing_date: "2026-06-28" },
+];
