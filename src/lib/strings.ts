@@ -25,7 +25,11 @@ const translations = {
       myAccounts: "Mes Comptes",
       monthExpenses: "Dépenses du Mois",
       seeAll: "Voir tout",
-      percentOfTotal: "% du total",
+      percentOfTotal: "{p}% du total",
+      quickAdd: "Ajouter",
+      quickReports: "Rapports",
+      quickAI: "IA",
+      quickStocks: "Bourse",
     },
     auth: {
       google: "Continuer avec Google",
@@ -46,6 +50,11 @@ const translations = {
       emptyHint: "Ajoutez votre première dépense avec le bouton +",
       loadMore: "Charger plus",
       aiBadge: "IA",
+      filter: {
+        all: "Toutes",
+        income: "Revenus",
+        expense: "Dépenses",
+      },
       add: {
         titleExpense: "Nouvelle dépense",
         titleIncome: "Nouveau revenu",
@@ -59,6 +68,10 @@ const translations = {
         notes: "Notes",
         addNote: "Ajouter une note",
         submit: "Enregistrer",
+        type: {
+          expense: "Dépense",
+          income: "Revenu",
+        },
       },
       delete: {
         confirm: "Supprimer cette transaction ?",
@@ -75,8 +88,11 @@ const translations = {
       subtitle: "Passez à un plan supérieur pour accéder à cette fonctionnalité",
       monthly: "/ mois",
       yearly: "/ an",
-      upgrade: "Mettre à niveau",
+      upgrade: "Passer à {plan}",
       later: "Plus tard",
+      free: "Gratuit",
+      pro: "Pro",
+      max: "Max",
     },
   },
   en: {
@@ -103,7 +119,11 @@ const translations = {
       myAccounts: "My Accounts",
       monthExpenses: "Monthly Expenses",
       seeAll: "See all",
-      percentOfTotal: "% of total",
+      percentOfTotal: "{p}% of total",
+      quickAdd: "Add",
+      quickReports: "Reports",
+      quickAI: "AI",
+      quickStocks: "Stocks",
     },
     auth: {
       google: "Continue with Google",
@@ -124,6 +144,11 @@ const translations = {
       emptyHint: "Add your first expense with the + button",
       loadMore: "Load more",
       aiBadge: "AI",
+      filter: {
+        all: "All",
+        income: "Income",
+        expense: "Expenses",
+      },
       add: {
         titleExpense: "New expense",
         titleIncome: "New income",
@@ -137,6 +162,10 @@ const translations = {
         notes: "Notes",
         addNote: "Add a note",
         submit: "Save",
+        type: {
+          expense: "Expense",
+          income: "Income",
+        },
       },
       delete: {
         confirm: "Delete this transaction?",
@@ -153,8 +182,11 @@ const translations = {
       subtitle: "Upgrade your plan to access this feature",
       monthly: "/ month",
       yearly: "/ year",
-      upgrade: "Upgrade",
+      upgrade: "Upgrade to {plan}",
       later: "Later",
+      free: "Free",
+      pro: "Pro",
+      max: "Max",
     },
   },
 } as const;
@@ -174,6 +206,13 @@ function getNestedValue(obj: Record<string, unknown>, path: string): string {
   return typeof current === "string" ? current : path;
 }
 
+function interpolate(template: string, vars?: Record<string, string | number>): string {
+  if (!vars) return template;
+  return template.replace(/\{(\w+)\}/g, (_, k) =>
+    k in vars ? String(vars[k]) : `{${k}}`,
+  );
+}
+
 function readLang(): Language {
   if (typeof window === "undefined") return "fr";
   const stored = window.localStorage.getItem("wealthia_lang");
@@ -184,8 +223,10 @@ export function useTranslation() {
   const lang: Language = readLang();
   const strings = translations[lang];
 
-  const t = (key: string): string =>
-    getNestedValue(strings as unknown as Record<string, unknown>, key);
+  const t = (key: string, vars?: Record<string, string | number>): string => {
+    const raw = getNestedValue(strings as unknown as Record<string, unknown>, key);
+    return interpolate(raw, vars);
+  };
 
   const setLanguage = (l: Language) => {
     if (typeof window === "undefined") return;
