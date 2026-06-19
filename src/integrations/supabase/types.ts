@@ -19,6 +19,7 @@ export type Database = {
           balance: number
           created_at: string
           currency: string
+          deleted_at: string | null
           icon: string | null
           id: string
           name: string
@@ -30,6 +31,7 @@ export type Database = {
           balance?: number
           created_at?: string
           currency?: string
+          deleted_at?: string | null
           icon?: string | null
           id?: string
           name: string
@@ -41,6 +43,7 @@ export type Database = {
           balance?: number
           created_at?: string
           currency?: string
+          deleted_at?: string | null
           icon?: string | null
           id?: string
           name?: string
@@ -151,6 +154,45 @@ export type Database = {
         }
         Relationships: []
       }
+      debts: {
+        Row: {
+          created_at: string
+          deleted_at: string | null
+          due_date: string | null
+          id: string
+          label: string
+          remaining_amount: number
+          total_amount: number
+          type: Database["public"]["Enums"]["debt_type"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_at?: string | null
+          due_date?: string | null
+          id?: string
+          label: string
+          remaining_amount: number
+          total_amount: number
+          type: Database["public"]["Enums"]["debt_type"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          deleted_at?: string | null
+          due_date?: string | null
+          id?: string
+          label?: string
+          remaining_amount?: number
+          total_amount?: number
+          type?: Database["public"]["Enums"]["debt_type"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -192,6 +234,7 @@ export type Database = {
           amount: number
           category_id: string | null
           created_at: string
+          deleted_at: string | null
           frequency: Database["public"]["Enums"]["sub_frequency"]
           id: string
           name: string
@@ -202,6 +245,7 @@ export type Database = {
           amount: number
           category_id?: string | null
           created_at?: string
+          deleted_at?: string | null
           frequency?: Database["public"]["Enums"]["sub_frequency"]
           id?: string
           name: string
@@ -212,6 +256,7 @@ export type Database = {
           amount?: number
           category_id?: string | null
           created_at?: string
+          deleted_at?: string | null
           frequency?: Database["public"]["Enums"]["sub_frequency"]
           id?: string
           name?: string
@@ -299,6 +344,7 @@ export type Database = {
       account_type: "courant" | "epargne" | "livret" | "liquide" | "autre"
       budget_period: "monthly" | "weekly"
       category_type: "expense" | "income" | "both"
+      debt_type: "debt" | "loan"
       plan_tier: "free" | "pro" | "max"
       sub_frequency: "monthly" | "yearly" | "weekly"
       tx_type: "expense" | "income"
@@ -432,6 +478,7 @@ export const Constants = {
       account_type: ["courant", "epargne", "livret", "liquide", "autre"],
       budget_period: ["monthly", "weekly"],
       category_type: ["expense", "income", "both"],
+      debt_type: ["debt", "loan"],
       plan_tier: ["free", "pro", "max"],
       sub_frequency: ["monthly", "yearly", "weekly"],
       tx_type: ["expense", "income"],
