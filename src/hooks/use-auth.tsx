@@ -33,12 +33,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => {
+    const { data: sub } = supabase.auth.onAuthStateChange((event, s) => {
       setSession(s);
       if (s?.user) {
         setTimeout(() => {
           loadProfile(s.user.id);
           loadRole(s.user.id);
+          if (event === "SIGNED_IN") consumePendingReferral(s.user.id);
         }, 0);
       } else {
         setProfile(null);
