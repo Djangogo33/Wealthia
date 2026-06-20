@@ -202,6 +202,9 @@ export type Database = {
           locale: string
           name: string | null
           plan: Database["public"]["Enums"]["plan_tier"]
+          plan_expires_at: string | null
+          referral_code: string | null
+          referred_by: string | null
           stripe_customer_id: string | null
           updated_at: string
         }
@@ -213,6 +216,9 @@ export type Database = {
           locale?: string
           name?: string | null
           plan?: Database["public"]["Enums"]["plan_tier"]
+          plan_expires_at?: string | null
+          referral_code?: string | null
+          referred_by?: string | null
           stripe_customer_id?: string | null
           updated_at?: string
         }
@@ -224,10 +230,132 @@ export type Database = {
           locale?: string
           name?: string | null
           plan?: Database["public"]["Enums"]["plan_tier"]
+          plan_expires_at?: string | null
+          referral_code?: string | null
+          referred_by?: string | null
           stripe_customer_id?: string | null
           updated_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_referred_by_fkey"
+            columns: ["referred_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      promo_code_uses: {
+        Row: {
+          applied_at: string
+          code_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          applied_at?: string
+          code_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          applied_at?: string
+          code_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "promo_code_uses_code_id_fkey"
+            columns: ["code_id"]
+            isOneToOne: false
+            referencedRelation: "promo_codes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "promo_code_uses_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      promo_codes: {
+        Row: {
+          active: boolean
+          code: string
+          created_at: string
+          duration_days: number
+          expires_at: string | null
+          id: string
+          max_uses: number | null
+          plan: string
+          uses_count: number
+        }
+        Insert: {
+          active?: boolean
+          code: string
+          created_at?: string
+          duration_days: number
+          expires_at?: string | null
+          id?: string
+          max_uses?: number | null
+          plan: string
+          uses_count?: number
+        }
+        Update: {
+          active?: boolean
+          code?: string
+          created_at?: string
+          duration_days?: number
+          expires_at?: string | null
+          id?: string
+          max_uses?: number | null
+          plan?: string
+          uses_count?: number
+        }
         Relationships: []
+      }
+      referrals: {
+        Row: {
+          created_at: string
+          id: string
+          referred_id: string
+          referrer_id: string
+          reward_granted: boolean
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          referred_id: string
+          referrer_id: string
+          reward_granted?: boolean
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          referred_id?: string
+          referrer_id?: string
+          reward_granted?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referrals_referred_id_fkey"
+            columns: ["referred_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_referrer_id_fkey"
+            columns: ["referrer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       subscriptions_tracked: {
         Row: {
@@ -333,15 +461,47 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      grant_referral_rewards: {
+        Args: { _referred_id: string }
+        Returns: undefined
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
       account_type: "courant" | "epargne" | "livret" | "liquide" | "autre"
+      app_role: "user" | "admin"
       budget_period: "monthly" | "weekly"
       category_type: "expense" | "income" | "both"
       debt_type: "debt" | "loan"
@@ -476,6 +636,7 @@ export const Constants = {
   public: {
     Enums: {
       account_type: ["courant", "epargne", "livret", "liquide", "autre"],
+      app_role: ["user", "admin"],
       budget_period: ["monthly", "weekly"],
       category_type: ["expense", "income", "both"],
       debt_type: ["debt", "loan"],
