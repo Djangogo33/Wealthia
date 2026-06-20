@@ -95,7 +95,7 @@ function SettingsPage() {
       ).toISOString();
       await supabase
         .from("profiles")
-        .update({ plan: code.plan, plan_expires_at: newExpiry })
+        .update({ plan: code.plan as "free" | "pro" | "max", plan_expires_at: newExpiry })
         .eq("id", profile.id);
       await supabase
         .from("promo_codes")

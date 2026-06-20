@@ -14,6 +14,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedTransactionsRouteImport } from './routes/_authenticated/transactions'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedConseillerRouteImport } from './routes/_authenticated/conseiller'
 import { Route as AuthenticatedComptesRouteImport } from './routes/_authenticated/comptes'
 import { Route as AuthenticatedBourseRouteImport } from './routes/_authenticated/bourse'
@@ -45,6 +46,11 @@ const AuthenticatedTransactionsRoute =
     path: '/transactions',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedConseillerRoute = AuthenticatedConseillerRouteImport.update({
   id: '/conseiller',
   path: '/conseiller',
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/bourse': typeof AuthenticatedBourseRoute
   '/comptes': typeof AuthenticatedComptesRoute
   '/conseiller': typeof AuthenticatedConseillerRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/transactions': typeof AuthenticatedTransactionsRoute
   '/api/stripe/create-checkout-session': typeof ApiStripeCreateCheckoutSessionRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/bourse': typeof AuthenticatedBourseRoute
   '/comptes': typeof AuthenticatedComptesRoute
   '/conseiller': typeof AuthenticatedConseillerRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/transactions': typeof AuthenticatedTransactionsRoute
   '/': typeof AuthenticatedIndexRoute
   '/api/stripe/create-checkout-session': typeof ApiStripeCreateCheckoutSessionRoute
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/_authenticated/bourse': typeof AuthenticatedBourseRoute
   '/_authenticated/comptes': typeof AuthenticatedComptesRoute
   '/_authenticated/conseiller': typeof AuthenticatedConseillerRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/transactions': typeof AuthenticatedTransactionsRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/api/stripe/create-checkout-session': typeof ApiStripeCreateCheckoutSessionRoute
@@ -116,6 +125,7 @@ export interface FileRouteTypes {
     | '/bourse'
     | '/comptes'
     | '/conseiller'
+    | '/settings'
     | '/transactions'
     | '/api/stripe/create-checkout-session'
     | '/api/public/stripe/webhook'
@@ -126,6 +136,7 @@ export interface FileRouteTypes {
     | '/bourse'
     | '/comptes'
     | '/conseiller'
+    | '/settings'
     | '/transactions'
     | '/'
     | '/api/stripe/create-checkout-session'
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | '/_authenticated/bourse'
     | '/_authenticated/comptes'
     | '/_authenticated/conseiller'
+    | '/_authenticated/settings'
     | '/_authenticated/transactions'
     | '/_authenticated/'
     | '/api/stripe/create-checkout-session'
@@ -189,6 +201,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTransactionsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/conseiller': {
       id: '/_authenticated/conseiller'
       path: '/conseiller'
@@ -231,6 +250,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedBourseRoute: typeof AuthenticatedBourseRoute
   AuthenticatedComptesRoute: typeof AuthenticatedComptesRoute
   AuthenticatedConseillerRoute: typeof AuthenticatedConseillerRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedTransactionsRoute: typeof AuthenticatedTransactionsRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
 }
@@ -239,6 +259,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedBourseRoute: AuthenticatedBourseRoute,
   AuthenticatedComptesRoute: AuthenticatedComptesRoute,
   AuthenticatedConseillerRoute: AuthenticatedConseillerRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedTransactionsRoute: AuthenticatedTransactionsRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
 }
