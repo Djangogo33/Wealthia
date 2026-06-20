@@ -10,33 +10,63 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import logoAsset from "@/assets/wealthia-logo.png.asset.json";
 
-export const Route = createFileRoute("/signup")({ ssr: false, component: SignupPage });
+export const Route = createFileRoute("/signup")({
+  ssr: false,
+  validateSearch: (s: Record<string, unknown>) => ({ ref: typeof s.ref === "string" ? s.ref : undefined }),
+  component: SignupPage,
+});
 
 function SignupPage() {
   const { t } = useTranslation();
   const { session } = useAuth();
   const navigate = useNavigate();
+  const search = Route.useSearch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
+  const referralCode = search.ref?.toUpperCase();
 
   useEffect(() => { if (session) navigate({ to: "/" }); }, [session, navigate]);
+
+  async function applyReferral(userId: string) {
+    if (!referralCode) return;
+    const { data: ref } = await supabase
+      .from("profiles")
+      .select("id")
+      .eq("referral_code", referralCode)
+      .maybeSingle();
+    if (!ref || ref.id === userId) return;
+    await supabase.from("profiles").update({ referred_by: ref.id }).eq("id", userId);
+    await supabase.from("referrals").insert({ referrer_id: ref.id, referred_id: userId });
+  }
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: { emailRedirectTo: window.location.origin, data: { name } },
     });
-    setBusy(false);
-    if (error) return toast.error(error.message);
-    navigate({ to: "/" });
+    if (error) { setBusy(false); return toast.error(error.message); }
+    if (data.user) {
+      // small delay so the profile trigger has run
+      setTimeout(async () => {
+        await applyReferral(data.user!.id);
+        setBusy(false);
+        navigate({ to: "/" });
+      }, 500);
+    } else {
+      setBusy(false);
+      navigate({ to: "/" });
+    }
   }
 
   async function google() {
+    if (referralCode && typeof window !== "undefined") {
+      window.localStorage.setItem("wealthia_pending_ref", referralCode);
+    }
     const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
     if (result.error) return toast.error(String(result.error));
     if (!result.redirected) navigate({ to: "/" });
@@ -48,6 +78,9 @@ function SignupPage() {
         <div className="mb-8 flex flex-col items-center text-center">
           <img src={logoAsset.url} alt="Wealthia" className="h-16 w-16 rounded-full" />
           <h1 className="mt-4 text-2xl font-semibold">{t("auth.signup")}</h1>
+          {referralCode && (
+            <p className="mt-2 text-xs text-[var(--gold)]">✦ ref: {referralCode}</p>
+          )}
         </div>
         <div className="card-surface p-6">
           <Button onClick={google} variant="outline" className="w-full border-[var(--border)]">{t("auth.google")}</Button>

@@ -18,6 +18,7 @@ import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedConseillerRouteImport } from './routes/_authenticated/conseiller'
 import { Route as AuthenticatedComptesRouteImport } from './routes/_authenticated/comptes'
 import { Route as AuthenticatedBourseRouteImport } from './routes/_authenticated/bourse'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ApiStripeCreateCheckoutSessionRouteImport } from './routes/api/stripe/create-checkout-session'
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe/webhook'
 
@@ -66,6 +67,11 @@ const AuthenticatedBourseRoute = AuthenticatedBourseRouteImport.update({
   path: '/bourse',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const ApiStripeCreateCheckoutSessionRoute =
   ApiStripeCreateCheckoutSessionRouteImport.update({
     id: '/api/stripe/create-checkout-session',
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/bourse': typeof AuthenticatedBourseRoute
   '/comptes': typeof AuthenticatedComptesRoute
   '/conseiller': typeof AuthenticatedConseillerRoute
@@ -93,6 +100,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/bourse': typeof AuthenticatedBourseRoute
   '/comptes': typeof AuthenticatedComptesRoute
   '/conseiller': typeof AuthenticatedConseillerRoute
@@ -107,6 +115,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/bourse': typeof AuthenticatedBourseRoute
   '/_authenticated/comptes': typeof AuthenticatedComptesRoute
   '/_authenticated/conseiller': typeof AuthenticatedConseillerRoute
@@ -122,6 +131,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/signup'
+    | '/admin'
     | '/bourse'
     | '/comptes'
     | '/conseiller'
@@ -133,6 +143,7 @@ export interface FileRouteTypes {
   to:
     | '/login'
     | '/signup'
+    | '/admin'
     | '/bourse'
     | '/comptes'
     | '/conseiller'
@@ -146,6 +157,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/login'
     | '/signup'
+    | '/_authenticated/admin'
     | '/_authenticated/bourse'
     | '/_authenticated/comptes'
     | '/_authenticated/conseiller'
@@ -229,6 +241,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBourseRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/api/stripe/create-checkout-session': {
       id: '/api/stripe/create-checkout-session'
       path: '/api/stripe/create-checkout-session'
@@ -247,6 +266,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedBourseRoute: typeof AuthenticatedBourseRoute
   AuthenticatedComptesRoute: typeof AuthenticatedComptesRoute
   AuthenticatedConseillerRoute: typeof AuthenticatedConseillerRoute
@@ -256,6 +276,7 @@ interface AuthenticatedRouteChildren {
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedBourseRoute: AuthenticatedBourseRoute,
   AuthenticatedComptesRoute: AuthenticatedComptesRoute,
   AuthenticatedConseillerRoute: AuthenticatedConseillerRoute,
