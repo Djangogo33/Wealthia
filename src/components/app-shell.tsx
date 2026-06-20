@@ -1,8 +1,9 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { Home, ArrowLeftRight, Wallet, TrendingUp, Sparkles } from "lucide-react";
+import { Home, ArrowLeftRight, Wallet, TrendingUp, Sparkles, Settings, Shield } from "lucide-react";
 import { useTranslation } from "@/lib/strings";
 import logoAsset from "@/assets/wealthia-logo.png.asset.json";
 import { useDemo } from "@/hooks/use-demo";
+import { useAuth } from "@/hooks/use-auth";
 import type { ReactNode } from "react";
 
 const items = [
@@ -17,6 +18,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { t, lang, setLanguage } = useTranslation();
   const path = useRouterState({ select: (s) => s.location.pathname });
   const { isDemo, disableDemo } = useDemo();
+  const { isAdmin } = useAuth();
   const navigate = useNavigate();
 
   function exitToSignup() {
@@ -41,15 +43,26 @@ export function AppShell({ children }: { children: ReactNode }) {
           </button>
         </div>
       )}
-      {/* Mobile language toggle */}
-      <button
-        onClick={toggleLang}
-        aria-label="Change language"
-        className="fixed right-3 top-3 z-30 rounded-full border border-[var(--border)] bg-[var(--card)]/80 px-2.5 py-1 text-[10px] text-[var(--muted-foreground)] backdrop-blur lg:hidden"
+      {/* Mobile top-right controls */}
+      <div
+        className="fixed right-3 top-3 z-30 flex items-center gap-2 lg:hidden"
         style={isDemo ? { top: "2.75rem" } : undefined}
       >
-        {langLabel}
-      </button>
+        <Link
+          to="/settings"
+          aria-label="Settings"
+          className="rounded-full border border-[var(--border)] bg-[var(--card)]/80 p-1.5 text-[var(--muted-foreground)] backdrop-blur"
+        >
+          <Settings className="h-4 w-4" />
+        </Link>
+        <button
+          onClick={toggleLang}
+          aria-label="Change language"
+          className="rounded-full border border-[var(--border)] bg-[var(--card)]/80 px-2.5 py-1 text-[10px] text-[var(--muted-foreground)] backdrop-blur"
+        >
+          {langLabel}
+        </button>
+      </div>
       {/* Desktop sidebar */}
 
       <aside className="fixed inset-y-0 left-0 z-20 hidden w-[240px] flex-col border-r border-[var(--border)] bg-[var(--card)] px-4 py-6 lg:flex">
@@ -88,6 +101,29 @@ export function AppShell({ children }: { children: ReactNode }) {
             );
           })}
         </nav>
+
+        <div className="mt-auto flex flex-col gap-1 border-t border-[var(--border)] pt-3">
+          {isAdmin && !isDemo && (
+            <Link
+              to="/admin"
+              className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-[var(--gold)] hover:bg-[var(--muted)]"
+            >
+              <Shield className="h-5 w-5" />
+              <span>{t("admin.title")}</span>
+            </Link>
+          )}
+          <Link
+            to="/settings"
+            className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors ${
+              path === "/settings"
+                ? "bg-[var(--muted)] text-[var(--gold)]"
+                : "text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
+            }`}
+          >
+            <Settings className="h-5 w-5" />
+            <span>{t("settings.title")}</span>
+          </Link>
+        </div>
       </aside>
 
       {/* Content */}
