@@ -76,6 +76,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsAdmin(!!data);
   }
 
+  async function consumePendingReferral(uid: string) {
+    if (typeof window === "undefined") return;
+    const code = window.localStorage.getItem("wealthia_pending_ref");
+    if (!code) return;
+    window.localStorage.removeItem("wealthia_pending_ref");
+    const { data: ref } = await supabase
+      .from("profiles")
+      .select("id,referred_by")
+      .eq("id", uid)
+      .maybeSingle();
+    if (!ref || ref.referred_by) return;
+    const { data: referrer } = await supabase
+      .from("profiles")
+      .select("id")
+      .eq("referral_code", code)
+      .maybeSingle();
+    if (!referrer || referrer.id === uid) return;
+    await supabase.from("profiles").update({ referred_by: referrer.id }).eq("id", uid);
+    await supabase.from("referrals").insert({ referrer_id: referrer.id, referred_id: uid });
+  }
+
   async function reloadProfile() {
     if (session?.user) await loadProfile(session.user.id);
   }
