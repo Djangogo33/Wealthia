@@ -57,31 +57,43 @@ export type Database = {
         Row: {
           created_at: string
           currency: string
+          current_price: number | null
+          deleted_at: string | null
           id: string
           name: string
+          price_updated_at: string | null
           purchase_price: number
           quantity: number
           symbol: string
+          type: string
           user_id: string
         }
         Insert: {
           created_at?: string
           currency?: string
+          current_price?: number | null
+          deleted_at?: string | null
           id?: string
           name: string
+          price_updated_at?: string | null
           purchase_price?: number
           quantity?: number
           symbol: string
+          type?: string
           user_id: string
         }
         Update: {
           created_at?: string
           currency?: string
+          current_price?: number | null
+          deleted_at?: string | null
           id?: string
           name?: string
+          price_updated_at?: string | null
           purchase_price?: number
           quantity?: number
           symbol?: string
+          type?: string
           user_id?: string
         }
         Relationships: []
@@ -356,6 +368,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      savings_goals: {
+        Row: {
+          created_at: string
+          current_amount: number | null
+          deleted_at: string | null
+          icon: string | null
+          id: string
+          name: string
+          target_amount: number
+          target_date: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          current_amount?: number | null
+          deleted_at?: string | null
+          icon?: string | null
+          id?: string
+          name: string
+          target_amount: number
+          target_date?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          current_amount?: number | null
+          deleted_at?: string | null
+          icon?: string | null
+          id?: string
+          name?: string
+          target_amount?: number
+          target_date?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       subscriptions_tracked: {
         Row: {
