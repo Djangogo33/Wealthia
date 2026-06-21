@@ -1012,7 +1012,7 @@ function AddSubSheet({
                     : "border-[var(--foreground)]/15"
                 }`}
               >
-                <span>{c.icon ?? "📦"}</span>
+                <DynamicIcon name={c.icon ?? "circle"} size={18} className="text-[#C8B99A]" />
                 <span className="truncate">{c.name}</span>
               </button>
             ))}
