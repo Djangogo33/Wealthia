@@ -15,6 +15,7 @@ import {
   Receipt,
   Tag,
 } from "lucide-react";
+import { DynamicIcon } from "@/components/ui/DynamicIcon";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { useDemo } from "@/hooks/use-demo";
