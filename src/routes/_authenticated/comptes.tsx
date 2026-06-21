@@ -15,6 +15,7 @@ import {
   Receipt,
   Tag,
 } from "lucide-react";
+import { DynamicIcon } from "@/components/ui/DynamicIcon";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { useDemo } from "@/hooks/use-demo";
@@ -457,7 +458,7 @@ function BudgetCard({ budget }: { budget: Budget }) {
     <div className="card-surface p-4">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2 min-w-0">
-          <span className="text-xl">{budget.category?.icon ?? "📦"}</span>
+          <DynamicIcon name={budget.category?.icon ?? "circle"} size={20} className="text-[#C8B99A]" />
           <span className="font-semibold truncate">{budget.category?.name ?? "—"}</span>
         </div>
         <div className="text-sm tabular-nums">
@@ -788,7 +789,7 @@ function AddBudgetSheet({
                   : "border-[var(--foreground)]/15"
               }`}
             >
-              <span>{c.icon ?? "📦"}</span>
+              <DynamicIcon name={c.icon ?? "circle"} size={18} className="text-[#C8B99A]" />
               <span className="truncate">{c.name}</span>
             </button>
           ))}
@@ -1011,7 +1012,7 @@ function AddSubSheet({
                     : "border-[var(--foreground)]/15"
                 }`}
               >
-                <span>{c.icon ?? "📦"}</span>
+                <DynamicIcon name={c.icon ?? "circle"} size={18} className="text-[#C8B99A]" />
                 <span className="truncate">{c.name}</span>
               </button>
             ))}

@@ -66,9 +66,42 @@ export type DemoBudget = {
   period: "monthly" | "weekly";
 };
 export const demoBudgets: DemoBudget[] = [
-  { id: "b1", category: "Alimentation", category_icon: "🛒", limit: 400, spent: 281.8, period: "monthly" },
-  { id: "b2", category: "Transport", category_icon: "🚇", limit: 150, spent: 42.0, period: "monthly" },
-  { id: "b3", category: "Loisirs", category_icon: "🎮", limit: 100, spent: 0, period: "monthly" },
+  { id: "b1", category: "Alimentation", category_icon: "utensils", limit: 400, spent: 281.8, period: "monthly" },
+  { id: "b2", category: "Transport", category_icon: "car", limit: 150, spent: 42.0, period: "monthly" },
+  { id: "b3", category: "Loisirs", category_icon: "gamepad-2", limit: 100, spent: 0, period: "monthly" },
+];
+
+export type DemoAsset = {
+  id: string;
+  type: "Action" | "ETF" | "Crypto" | "Autre";
+  symbol: string;
+  name: string;
+  quantity: number;
+  purchase_price: number;
+  current_price: number;
+  currency: string;
+};
+
+export const demoAssets: DemoAsset[] = [
+  { id: "a1", type: "ETF",    symbol: "IWDA", name: "iShares MSCI World", quantity: 15,   purchase_price: 85.2,   current_price: 98.4,  currency: "EUR" },
+  { id: "a2", type: "Action", symbol: "AAPL", name: "Apple Inc.",         quantity: 5,    purchase_price: 142.0,  current_price: 189.5, currency: "USD" },
+  { id: "a3", type: "Crypto", symbol: "BTC",  name: "Bitcoin",            quantity: 0.05, purchase_price: 28000,  current_price: 62000, currency: "EUR" },
+  { id: "a4", type: "Action", symbol: "AIR",  name: "Airbus SE",          quantity: 8,    purchase_price: 120.0,  current_price: 165.3, currency: "EUR" },
+];
+
+export type DemoGoal = {
+  id: string;
+  name: string;
+  icon: string;
+  target_amount: number;
+  current_amount: number;
+  target_date: string | null;
+};
+
+export const demoGoals: DemoGoal[] = [
+  { id: "g1", name: "Apport immobilier", icon: "🏠", target_amount: 30000, current_amount: 12400, target_date: "2027-06-01" },
+  { id: "g2", name: "Voyage Japon",      icon: "✈️", target_amount: 3500,  current_amount: 1850,  target_date: "2026-12-01" },
+  { id: "g3", name: "Fonds d'urgence",   icon: "💰", target_amount: 5000,  current_amount: 5000,  target_date: null },
 ];
 
 export type DemoDebt = {
