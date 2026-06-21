@@ -458,7 +458,7 @@ function BudgetCard({ budget }: { budget: Budget }) {
     <div className="card-surface p-4">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2 min-w-0">
-          <span className="text-xl">{budget.category?.icon ?? "📦"}</span>
+          <DynamicIcon name={budget.category?.icon ?? "circle"} size={20} className="text-[#C8B99A]" />
           <span className="font-semibold truncate">{budget.category?.name ?? "—"}</span>
         </div>
         <div className="text-sm tabular-nums">
