@@ -49,6 +49,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         className="fixed right-3 top-3 z-30 flex items-center gap-2 lg:hidden"
         style={isDemo ? { top: "2.75rem" } : undefined}
       >
+        <NotificationsBell />
         <Link
           to="/settings"
           aria-label="Settings"
