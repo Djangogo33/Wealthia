@@ -74,6 +74,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <div className="text-base font-semibold">{t("app.name")}</div>
             <div className="text-[10px] uppercase tracking-widest text-[var(--muted-foreground)]">{t("app.tagline")}</div>
           </div>
+          <NotificationsBell />
           <button
             onClick={toggleLang}
             aria-label="Change language"
