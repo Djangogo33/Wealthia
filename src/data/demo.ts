@@ -111,9 +111,11 @@ export type DemoDebt = {
   total_amount: number;
   remaining_amount: number;
   due_date: string | null;
+  account_id: string | null;
+  settled_at: string | null;
 };
 export const demoDebts: DemoDebt[] = [
-  { id: "debt1", label: "Prêt voiture", type: "loan", total_amount: 8000, remaining_amount: 5400, due_date: "2028-01-01" },
+  { id: "debt1", label: "Prêt voiture", type: "loan", total_amount: 8000, remaining_amount: 5400, due_date: "2028-01-01", account_id: "d1", settled_at: null },
 ];
 
 export type DemoSubscription = {
@@ -122,9 +124,23 @@ export type DemoSubscription = {
   amount: number;
   frequency: "monthly" | "yearly" | "weekly";
   next_billing_date: string;
+  account_id: string | null;
+  paused: boolean;
 };
 export const demoSubscriptions: DemoSubscription[] = [
-  { id: "s1", name: "Netflix", amount: 13.99, frequency: "monthly", next_billing_date: "2026-07-01" },
-  { id: "s2", name: "Spotify", amount: 9.99, frequency: "monthly", next_billing_date: "2026-07-01" },
-  { id: "s3", name: "iCloud 50Go", amount: 0.99, frequency: "monthly", next_billing_date: "2026-06-28" },
+  { id: "s1", name: "Netflix",     amount: 13.99, frequency: "monthly", next_billing_date: "2026-07-01", account_id: "d1", paused: false },
+  { id: "s2", name: "Spotify",     amount: 9.99,  frequency: "monthly", next_billing_date: "2026-07-01", account_id: "d1", paused: false },
+  { id: "s3", name: "iCloud 50Go", amount: 0.99,  frequency: "monthly", next_billing_date: "2026-06-28", account_id: "d1", paused: false },
+];
+
+export type DemoNotification = {
+  id: string;
+  title: string;
+  body: string;
+  read: boolean;
+  created_at: string;
+};
+export const demoNotifications: DemoNotification[] = [
+  { id: "n1", title: "Prélèvement Netflix", body: "Prélèvement Netflix de 13,99€ aujourd'hui sur BoursoBank", read: false, created_at: "2026-06-22T08:00:00Z" },
+  { id: "n2", title: "Rappel Spotify",      body: "Spotify de 9,99€ prélevé dans 3 jours",                       read: true,  created_at: "2026-06-20T08:00:00Z" },
 ];
