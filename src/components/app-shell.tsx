@@ -4,6 +4,7 @@ import { useTranslation } from "@/lib/strings";
 import logoAsset from "@/assets/wealthia-logo.png.asset.json";
 import { useDemo } from "@/hooks/use-demo";
 import { useAuth } from "@/hooks/use-auth";
+import { NotificationsBell } from "@/components/notifications-bell";
 import type { ReactNode } from "react";
 
 const items = [
