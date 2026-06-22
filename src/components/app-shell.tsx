@@ -4,6 +4,7 @@ import { useTranslation } from "@/lib/strings";
 import logoAsset from "@/assets/wealthia-logo.png.asset.json";
 import { useDemo } from "@/hooks/use-demo";
 import { useAuth } from "@/hooks/use-auth";
+import { NotificationsBell } from "@/components/notifications-bell";
 import type { ReactNode } from "react";
 
 const items = [
@@ -48,6 +49,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         className="fixed right-3 top-3 z-30 flex items-center gap-2 lg:hidden"
         style={isDemo ? { top: "2.75rem" } : undefined}
       >
+        <NotificationsBell />
         <Link
           to="/settings"
           aria-label="Settings"
@@ -72,6 +74,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <div className="text-base font-semibold">{t("app.name")}</div>
             <div className="text-[10px] uppercase tracking-widest text-[var(--muted-foreground)]">{t("app.tagline")}</div>
           </div>
+          <NotificationsBell />
           <button
             onClick={toggleLang}
             aria-label="Change language"

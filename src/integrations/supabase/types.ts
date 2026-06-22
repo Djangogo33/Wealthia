@@ -168,39 +168,80 @@ export type Database = {
       }
       debts: {
         Row: {
+          account_id: string | null
           created_at: string
           deleted_at: string | null
           due_date: string | null
           id: string
           label: string
           remaining_amount: number
+          settled_at: string | null
           total_amount: number
           type: Database["public"]["Enums"]["debt_type"]
           updated_at: string
           user_id: string
         }
         Insert: {
+          account_id?: string | null
           created_at?: string
           deleted_at?: string | null
           due_date?: string | null
           id?: string
           label: string
           remaining_amount: number
+          settled_at?: string | null
           total_amount: number
           type: Database["public"]["Enums"]["debt_type"]
           updated_at?: string
           user_id: string
         }
         Update: {
+          account_id?: string | null
           created_at?: string
           deleted_at?: string | null
           due_date?: string | null
           id?: string
           label?: string
           remaining_amount?: number
+          settled_at?: string | null
           total_amount?: number
           type?: Database["public"]["Enums"]["debt_type"]
           updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "debts_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notifications: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          read: boolean
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          read?: boolean
+          title: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          read?: boolean
+          title?: string
           user_id?: string
         }
         Relationships: []
@@ -410,6 +451,7 @@ export type Database = {
       }
       subscriptions_tracked: {
         Row: {
+          account_id: string | null
           amount: number
           category_id: string | null
           created_at: string
@@ -418,9 +460,11 @@ export type Database = {
           id: string
           name: string
           next_billing_date: string | null
+          paused: boolean
           user_id: string
         }
         Insert: {
+          account_id?: string | null
           amount: number
           category_id?: string | null
           created_at?: string
@@ -429,9 +473,11 @@ export type Database = {
           id?: string
           name: string
           next_billing_date?: string | null
+          paused?: boolean
           user_id: string
         }
         Update: {
+          account_id?: string | null
           amount?: number
           category_id?: string | null
           created_at?: string
@@ -440,9 +486,17 @@ export type Database = {
           id?: string
           name?: string
           next_billing_date?: string | null
+          paused?: boolean
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "subscriptions_tracked_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "subscriptions_tracked_category_id_fkey"
             columns: ["category_id"]
