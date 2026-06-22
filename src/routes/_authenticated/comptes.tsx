@@ -242,7 +242,7 @@ function ComptesPage() {
       }
       const { error } = await supabase
         .from("budgets")
-        .update({ deleted_at: new Date().toISOString() })
+        .delete()
         .eq("id", id);
       if (error) throw error;
     },
