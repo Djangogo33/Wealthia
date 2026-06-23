@@ -123,7 +123,7 @@ function Accueil() {
   const s = stats.data;
   const quick = [
     { key: "quickAdd", icon: Plus, primary: true, to: "/transactions" as const },
-    { key: "quickReports", icon: PieChart, onClick: () => reportsGate.check() && setReportsOpen(false) },
+    { key: "quickReports", icon: PieChart, to: "/reports" as const },
     { key: "quickAI", icon: Sparkles, onClick: () => ai.check() },
     { key: "quickStocks", icon: TrendingUp, to: "/bourse" as const },
   ];
@@ -138,9 +138,13 @@ function Accueil() {
             <p className="mt-0.5 text-xs uppercase tracking-widest text-[var(--muted-foreground)]">{isDemo ? demoUser.name : profile?.name}</p>
           )}
         </div>
-        <button className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[var(--muted)] text-[var(--muted-foreground)]">
+        <Link
+          to="/reports"
+          aria-label={t("reports.title")}
+          className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[var(--muted)] text-[var(--muted-foreground)]"
+        >
           <BarChart3 className="h-5 w-5" />
-        </button>
+        </Link>
       </header>
 
       <section
