@@ -255,8 +255,6 @@ function Accueil() {
       </section>
 
       <PaywallModal open={ai.paywallOpen} onOpenChange={ai.setPaywallOpen} requiredPlan={ai.required} />
-      <PaywallModal open={reportsGate.paywallOpen} onOpenChange={reportsGate.setPaywallOpen} requiredPlan={reportsGate.required} />
-      {reportsOpen ? null : null}
     </div>
   );
 }
