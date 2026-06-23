@@ -15,6 +15,7 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedTransactionsRouteImport } from './routes/_authenticated/transactions'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedConseillerRouteImport } from './routes/_authenticated/conseiller'
 import { Route as AuthenticatedComptesRouteImport } from './routes/_authenticated/comptes'
 import { Route as AuthenticatedBourseRouteImport } from './routes/_authenticated/bourse'
@@ -50,6 +51,11 @@ const AuthenticatedTransactionsRoute =
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedConseillerRoute = AuthenticatedConseillerRouteImport.update({
@@ -92,6 +98,7 @@ export interface FileRoutesByFullPath {
   '/bourse': typeof AuthenticatedBourseRoute
   '/comptes': typeof AuthenticatedComptesRoute
   '/conseiller': typeof AuthenticatedConseillerRoute
+  '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/transactions': typeof AuthenticatedTransactionsRoute
   '/api/stripe/create-checkout-session': typeof ApiStripeCreateCheckoutSessionRoute
@@ -104,6 +111,7 @@ export interface FileRoutesByTo {
   '/bourse': typeof AuthenticatedBourseRoute
   '/comptes': typeof AuthenticatedComptesRoute
   '/conseiller': typeof AuthenticatedConseillerRoute
+  '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/transactions': typeof AuthenticatedTransactionsRoute
   '/': typeof AuthenticatedIndexRoute
@@ -119,6 +127,7 @@ export interface FileRoutesById {
   '/_authenticated/bourse': typeof AuthenticatedBourseRoute
   '/_authenticated/comptes': typeof AuthenticatedComptesRoute
   '/_authenticated/conseiller': typeof AuthenticatedConseillerRoute
+  '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/transactions': typeof AuthenticatedTransactionsRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
@@ -135,6 +144,7 @@ export interface FileRouteTypes {
     | '/bourse'
     | '/comptes'
     | '/conseiller'
+    | '/reports'
     | '/settings'
     | '/transactions'
     | '/api/stripe/create-checkout-session'
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/bourse'
     | '/comptes'
     | '/conseiller'
+    | '/reports'
     | '/settings'
     | '/transactions'
     | '/'
@@ -161,6 +172,7 @@ export interface FileRouteTypes {
     | '/_authenticated/bourse'
     | '/_authenticated/comptes'
     | '/_authenticated/conseiller'
+    | '/_authenticated/reports'
     | '/_authenticated/settings'
     | '/_authenticated/transactions'
     | '/_authenticated/'
@@ -220,6 +232,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/conseiller': {
       id: '/_authenticated/conseiller'
       path: '/conseiller'
@@ -270,6 +289,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedBourseRoute: typeof AuthenticatedBourseRoute
   AuthenticatedComptesRoute: typeof AuthenticatedComptesRoute
   AuthenticatedConseillerRoute: typeof AuthenticatedConseillerRoute
+  AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedTransactionsRoute: typeof AuthenticatedTransactionsRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
@@ -280,6 +300,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedBourseRoute: AuthenticatedBourseRoute,
   AuthenticatedComptesRoute: AuthenticatedComptesRoute,
   AuthenticatedConseillerRoute: AuthenticatedConseillerRoute,
+  AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedTransactionsRoute: AuthenticatedTransactionsRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,

@@ -19,8 +19,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  LineChart,
-  Line,
   Area,
   AreaChart,
 } from "recharts";
@@ -29,11 +27,7 @@ import { useDemo } from "@/hooks/use-demo";
 import { useTranslation } from "@/lib/strings";
 import { formatEUR, formatSigned } from "@/lib/format";
 import { supabase } from "@/integrations/supabase/client";
-import {
-  demoAccounts,
-  demoTransactions,
-  demoCategories as _demoCats,
-} from "@/data/demo";
+import { demoAccounts, demoTransactions } from "@/data/demo";
 import { DynamicIcon } from "@/components/ui/DynamicIcon";
 
 export const Route = createFileRoute("/_authenticated/reports")({
