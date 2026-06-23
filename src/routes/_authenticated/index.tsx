@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
 import { formatEUR, formatSigned } from "@/lib/format";
 import { Plus, PieChart, Sparkles, TrendingUp, CreditCard, Wallet, BarChart3 } from "lucide-react";
-import { useState } from "react";
 import { PaywallModal } from "@/components/paywall-modal";
 import { useFeatureGate } from "@/hooks/use-feature-gate";
 import { useDemo } from "@/hooks/use-demo";
