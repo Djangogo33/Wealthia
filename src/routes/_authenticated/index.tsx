@@ -28,8 +28,6 @@ function Accueil() {
   const { profile, user } = useAuth();
   const { isDemo } = useDemo();
   const ai = useFeatureGate("ai_advisor");
-  const [reportsOpen, setReportsOpen] = useState(false);
-  const reportsGate = useFeatureGate("export_pdf");
 
   const stats = useQuery({
     queryKey: ["home-stats", isDemo ? "demo" : user?.id],
