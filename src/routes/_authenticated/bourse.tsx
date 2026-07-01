@@ -32,6 +32,8 @@ import { toast } from "sonner";
 import { useFeatureGate } from "@/hooks/use-feature-gate";
 import { PaywallModal } from "@/components/paywall-modal";
 import { getQuotes, searchSymbols } from "@/lib/quotes.functions";
+import { AssetSearch, type SearchResult } from "@/components/asset-search";
+import { AssetDetailModal } from "@/components/asset-detail-modal";
 
 type AssetType = "Action" | "ETF" | "Crypto" | "Autre";
 type Asset = {
