@@ -1,5 +1,6 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { Home, ArrowLeftRight, Wallet, TrendingUp, Sparkles, Settings, Shield } from "lucide-react";
+import { Home, ArrowLeftRight, Wallet, TrendingUp, Sparkles, Settings, Shield, LogOut } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import { useTranslation } from "@/lib/strings";
 import logoAsset from "@/assets/wealthia-logo.png.asset.json";
 import { useDemo } from "@/hooks/use-demo";
@@ -126,6 +127,17 @@ export function AppShell({ children }: { children: ReactNode }) {
             <Settings className="h-5 w-5" />
             <span>{t("settings.title")}</span>
           </Link>
+          <button
+            onClick={async () => {
+              if (isDemo) disableDemo();
+              else await supabase.auth.signOut();
+              navigate({ to: "/login" });
+            }}
+            className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-[#D4745A] hover:bg-[var(--muted)]"
+          >
+            <LogOut className="h-5 w-5" />
+            <span>{t("settings.logout")}</span>
+          </button>
         </div>
       </aside>
 

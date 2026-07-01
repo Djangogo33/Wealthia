@@ -246,6 +246,24 @@ export type Database = {
         }
         Relationships: []
       }
+      price_cache: {
+        Row: {
+          data: Json
+          fetched_at: string
+          symbol: string
+        }
+        Insert: {
+          data: Json
+          fetched_at?: string
+          symbol: string
+        }
+        Update: {
+          data?: Json
+          fetched_at?: string
+          symbol?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null

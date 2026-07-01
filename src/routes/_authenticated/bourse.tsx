@@ -32,6 +32,8 @@ import { toast } from "sonner";
 import { useFeatureGate } from "@/hooks/use-feature-gate";
 import { PaywallModal } from "@/components/paywall-modal";
 import { getQuotes, searchSymbols } from "@/lib/quotes.functions";
+import { AssetSearch, type SearchResult } from "@/components/asset-search";
+import { AssetDetailModal } from "@/components/asset-detail-modal";
 
 type AssetType = "Action" | "ETF" | "Crypto" | "Autre";
 type Asset = {
@@ -77,6 +79,8 @@ function BoursePage() {
     | { kind: "asset" | "goal"; id: string }
     | null
   >(null);
+  const [detail, setDetail] = useState<null | { symbol: string; name: string; currency?: string }>(null);
+  const [prefill, setPrefill] = useState<null | { symbol: string; name: string }>(null);
 
   // assets
   const assetsQuery = useQuery({
@@ -200,9 +204,22 @@ function BoursePage() {
     },
   });
 
+  const inPortfolio = (sym: string) => (assetsQuery.data ?? []).some((a) => a.symbol.toUpperCase() === sym.toUpperCase());
+  const positionOf = (sym: string) => {
+    const a = (assetsQuery.data ?? []).find((x) => x.symbol.toUpperCase() === sym.toUpperCase());
+    return a ? { quantity: a.quantity, purchase_price: a.purchase_price } : null;
+  };
+
   return (
     <div className="mx-auto max-w-3xl px-5 pt-8 pb-24">
       <h1 className="text-4xl font-semibold tracking-tight mb-6">{t("stocks.title")}</h1>
+
+      <div className="mb-5">
+        <AssetSearch
+          onPick={(r: SearchResult) => setDetail({ symbol: r.symbol, name: r.name })}
+        />
+      </div>
+
 
       {/* Portfolio header */}
       <div className="card-surface p-5 mb-6">
@@ -243,6 +260,7 @@ function BoursePage() {
                 key={a.id}
                 asset={a}
                 onDelete={() => setPendingDelete({ kind: "asset", id: a.id })}
+                onOpen={() => setDetail({ symbol: a.symbol, name: a.name, currency: a.currency })}
               />
             ))}
           </div>
@@ -315,6 +333,25 @@ function BoursePage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {detail && (
+        <AssetDetailModal
+          open
+          onClose={() => setDetail(null)}
+          symbol={detail.symbol}
+          name={detail.name}
+          currency={detail.currency}
+          position={positionOf(detail.symbol)}
+          inPortfolio={inPortfolio(detail.symbol)}
+          onAddToPortfolio={() => {
+            setPrefill({ symbol: detail.symbol, name: detail.name });
+            setDetail(null);
+            setAddOpen("asset");
+          }}
+        />
+      )}
+      {/* prefill state reserved for AddAssetSheet future use */}
+      {void prefill}
     </div>
   );
 }
@@ -354,7 +391,7 @@ function Empty({ icon, text }: { icon: ReactNode; text: string }) {
   );
 }
 
-function AssetRow({ asset, onDelete }: { asset: Asset; onDelete: () => void }) {
+function AssetRow({ asset, onDelete, onOpen }: { asset: Asset; onDelete: () => void; onOpen?: () => void }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const value = asset.current_price * asset.quantity;
@@ -365,7 +402,7 @@ function AssetRow({ asset, onDelete }: { asset: Asset; onDelete: () => void }) {
     <div className="card-surface">
       <button
         type="button"
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => (onOpen ? onOpen() : setOpen((o) => !o))}
         className="flex w-full items-center gap-3 p-3 text-left"
       >
         <div
