@@ -350,8 +350,8 @@ function BoursePage() {
           }}
         />
       )}
-      {/* prefill is passed via key trick */}
-      {prefill && addOpen !== "asset" && setPrefill(null)}
+      {/* prefill state reserved for AddAssetSheet future use */}
+      {void prefill}
     </div>
   );
 }
