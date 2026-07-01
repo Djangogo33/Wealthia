@@ -79,6 +79,8 @@ function BoursePage() {
     | { kind: "asset" | "goal"; id: string }
     | null
   >(null);
+  const [detail, setDetail] = useState<null | { symbol: string; name: string; currency?: string }>(null);
+  const [prefill, setPrefill] = useState<null | { symbol: string; name: string }>(null);
 
   // assets
   const assetsQuery = useQuery({
