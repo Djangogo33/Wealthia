@@ -333,6 +333,25 @@ function BoursePage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {detail && (
+        <AssetDetailModal
+          open
+          onClose={() => setDetail(null)}
+          symbol={detail.symbol}
+          name={detail.name}
+          currency={detail.currency}
+          position={positionOf(detail.symbol)}
+          inPortfolio={inPortfolio(detail.symbol)}
+          onAddToPortfolio={() => {
+            setPrefill({ symbol: detail.symbol, name: detail.name });
+            setDetail(null);
+            setAddOpen("asset");
+          }}
+        />
+      )}
+      {/* prefill is passed via key trick */}
+      {prefill && addOpen !== "asset" && setPrefill(null)}
     </div>
   );
 }
@@ -372,7 +391,7 @@ function Empty({ icon, text }: { icon: ReactNode; text: string }) {
   );
 }
 
-function AssetRow({ asset, onDelete }: { asset: Asset; onDelete: () => void }) {
+function AssetRow({ asset, onDelete, onOpen }: { asset: Asset; onDelete: () => void; onOpen?: () => void }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const value = asset.current_price * asset.quantity;
@@ -383,7 +402,7 @@ function AssetRow({ asset, onDelete }: { asset: Asset; onDelete: () => void }) {
     <div className="card-surface">
       <button
         type="button"
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => (onOpen ? onOpen() : setOpen((o) => !o))}
         className="flex w-full items-center gap-3 p-3 text-left"
       >
         <div
