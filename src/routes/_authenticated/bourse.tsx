@@ -204,9 +204,22 @@ function BoursePage() {
     },
   });
 
+  const inPortfolio = (sym: string) => (assetsQuery.data ?? []).some((a) => a.symbol.toUpperCase() === sym.toUpperCase());
+  const positionOf = (sym: string) => {
+    const a = (assetsQuery.data ?? []).find((x) => x.symbol.toUpperCase() === sym.toUpperCase());
+    return a ? { quantity: a.quantity, purchase_price: a.purchase_price } : null;
+  };
+
   return (
     <div className="mx-auto max-w-3xl px-5 pt-8 pb-24">
       <h1 className="text-4xl font-semibold tracking-tight mb-6">{t("stocks.title")}</h1>
+
+      <div className="mb-5">
+        <AssetSearch
+          onPick={(r: SearchResult) => setDetail({ symbol: r.symbol, name: r.name })}
+        />
+      </div>
+
 
       {/* Portfolio header */}
       <div className="card-surface p-5 mb-6">
@@ -247,6 +260,7 @@ function BoursePage() {
                 key={a.id}
                 asset={a}
                 onDelete={() => setPendingDelete({ kind: "asset", id: a.id })}
+                onOpen={() => setDetail({ symbol: a.symbol, name: a.name, currency: a.currency })}
               />
             ))}
           </div>
