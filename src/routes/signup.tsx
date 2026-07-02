@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import logoAsset from "@/assets/wealthia-logo.png.asset.json";
+import { LegalFooter } from "@/components/legal-footer";
+
 
 export const Route = createFileRoute("/signup")({
   ssr: false,
@@ -97,7 +99,9 @@ function SignupPage() {
         <p className="mt-6 text-center text-sm text-[var(--muted-foreground)]">
           {t("auth.haveAccount")} <Link to="/login" className="text-[var(--gold)]">{t("auth.login")}</Link>
         </p>
+        <LegalFooter />
       </div>
     </div>
+
   );
 }

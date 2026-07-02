@@ -6,6 +6,8 @@ import logoAsset from "@/assets/wealthia-logo.png.asset.json";
 import { useDemo } from "@/hooks/use-demo";
 import { useAuth } from "@/hooks/use-auth";
 import { NotificationsBell } from "@/components/notifications-bell";
+import { LegalFooter } from "@/components/legal-footer";
+
 import type { ReactNode } from "react";
 
 const items = [
@@ -142,7 +144,11 @@ export function AppShell({ children }: { children: ReactNode }) {
       </aside>
 
       {/* Content */}
-      <main className="min-h-screen pb-24 lg:ml-[240px] lg:pb-8">{children}</main>
+      <main className="min-h-screen pb-24 lg:ml-[240px] lg:pb-8">
+        {children}
+        <LegalFooter />
+      </main>
+
 
       {/* Mobile/Tablet bottom nav */}
       <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-[var(--border)] bg-[var(--background)]/95 backdrop-blur lg:hidden">
