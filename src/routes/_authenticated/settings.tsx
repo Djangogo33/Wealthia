@@ -144,6 +144,35 @@ function SettingsPage() {
     navigate({ to: "/login" });
   }
 
+  async function confirmDelete() {
+    if (isDemo) {
+      toast.info(t("demo.writeBlocked"));
+      return;
+    }
+    if (!profile) return;
+    if (deleteWord.trim().toUpperCase() !== t("settings.deleteConfirmWord")) return;
+    setDeleting(true);
+    try {
+      await supabase
+        .from("profiles")
+        .update({ deleted_at: new Date().toISOString() })
+        .eq("id", profile.id);
+      try {
+        await fetch("/api/stripe/cancel-subscription", { method: "POST" });
+      } catch {
+        /* best effort */
+      }
+      await supabase.auth.signOut();
+      toast.success(t("settings.deleteSuccess"));
+      navigate({ to: "/login" });
+    } finally {
+      setDeleting(false);
+      setDeleteStep(0);
+      setDeleteWord("");
+    }
+  }
+
+
   const initials = (profile?.name ?? profile?.email ?? "?")
     .split(/\s+/)
     .map((s) => s[0])
