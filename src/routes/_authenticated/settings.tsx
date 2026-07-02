@@ -303,9 +303,87 @@ function SettingsPage() {
           {t("settings.logout")}
         </Button>
       )}
+
+      {/* Danger zone */}
+      {!isDemo && (
+        <section className="mt-10 rounded-2xl border border-[#D4745A]/40 bg-[#D4745A]/5 p-5">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#D4745A]">
+            {t("settings.dangerZone")}
+          </h2>
+          <Button
+            variant="outline"
+            onClick={() => setDeleteStep(1)}
+            className="w-full border-[#D4745A] text-[#D4745A] hover:bg-[#D4745A]/10"
+          >
+            <Trash2 className="mr-2 h-4 w-4" />
+            {t("settings.deleteAccount")}
+          </Button>
+        </section>
+      )}
+
+      <Dialog
+        open={deleteStep !== 0}
+        onOpenChange={(o) => {
+          if (!o) {
+            setDeleteStep(0);
+            setDeleteWord("");
+          }
+        }}
+      >
+        <DialogContent>
+          {deleteStep === 1 && (
+            <>
+              <DialogHeader>
+                <DialogTitle>{t("settings.deleteConfirmTitle")}</DialogTitle>
+                <DialogDescription>{t("settings.deleteConfirmBody")}</DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setDeleteStep(0)}>
+                  {t("settings.deleteCancel")}
+                </Button>
+                <Button
+                  onClick={() => setDeleteStep(2)}
+                  className="bg-[#D4745A] text-[var(--primary-foreground)]"
+                >
+                  {t("settings.deleteContinue")}
+                </Button>
+              </DialogFooter>
+            </>
+          )}
+          {deleteStep === 2 && (
+            <>
+              <DialogHeader>
+                <DialogTitle>{t("settings.deleteConfirmStep2")}</DialogTitle>
+              </DialogHeader>
+              <Input
+                autoFocus
+                value={deleteWord}
+                onChange={(e) => setDeleteWord(e.target.value)}
+                placeholder={t("settings.deleteConfirmWord")}
+              />
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setDeleteStep(0)} disabled={deleting}>
+                  {t("settings.deleteCancel")}
+                </Button>
+                <Button
+                  onClick={confirmDelete}
+                  disabled={
+                    deleting ||
+                    deleteWord.trim().toUpperCase() !== t("settings.deleteConfirmWord")
+                  }
+                  className="bg-[#D4745A] text-[var(--primary-foreground)]"
+                >
+                  {t("settings.deleteFinal")}
+                </Button>
+              </DialogFooter>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
+
 
 // Keep icon import referenced when tree-shaking
 void SettingsIcon;
