@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Settings as SettingsIcon, Copy, Share2, LogOut, Globe } from "lucide-react";
+import { Settings as SettingsIcon, Copy, Share2, LogOut, Globe, Trash2 } from "lucide-react";
 import { useTranslation } from "@/lib/strings";
 import { useAuth } from "@/hooks/use-auth";
 import { useDemo } from "@/hooks/use-demo";
@@ -10,7 +10,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/_authenticated/settings")({
   ssr: false,
@@ -30,6 +39,10 @@ function SettingsPage() {
   const navigate = useNavigate();
   const [promo, setPromo] = useState("");
   const [applying, setApplying] = useState(false);
+  const [deleteStep, setDeleteStep] = useState<0 | 1 | 2>(0);
+  const [deleteWord, setDeleteWord] = useState("");
+  const [deleting, setDeleting] = useState(false);
+
 
   const referralCode = isDemo ? "DEMO1234" : profile?.referral_code ?? "";
   const origin = typeof window !== "undefined" ? window.location.origin : "";
