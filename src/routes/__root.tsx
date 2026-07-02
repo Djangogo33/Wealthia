@@ -14,6 +14,8 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider } from "@/hooks/use-auth";
 import { DemoProvider } from "@/hooks/use-demo";
 import { Toaster } from "@/components/ui/sonner";
+import { CookieBanner } from "@/components/cookie-banner";
+
 
 function NotFoundComponent() {
   return (
@@ -87,7 +89,9 @@ function RootComponent() {
         <DemoProvider>
           <Outlet />
           <Toaster />
+          <CookieBanner />
         </DemoProvider>
+
       </AuthProvider>
     </QueryClientProvider>
   );
