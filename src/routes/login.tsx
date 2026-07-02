@@ -10,6 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import logoAsset from "@/assets/wealthia-logo.png.asset.json";
+import { LegalFooter } from "@/components/legal-footer";
+
 
 export const Route = createFileRoute("/login")({ ssr: false, component: LoginPage });
 
@@ -108,7 +110,15 @@ function LoginPage() {
         <p className="mt-6 text-center text-sm text-[var(--muted-foreground)]">
           {t("auth.noAccount")} <Link to="/signup" className="text-[var(--gold)]">{t("auth.signup")}</Link>
         </p>
+        <p className="mt-4 text-center text-[11px] leading-relaxed text-[var(--muted-foreground)]">
+          {t("legal.loginConsent")}{" "}
+          <Link to="/legal/cgu" className="underline hover:text-[var(--gold)]">{t("legal.cgu")}</Link>{" "}
+          {t("legal.loginConsentAnd")}{" "}
+          <Link to="/legal/confidentialite" className="underline hover:text-[var(--gold)]">{t("legal.privacy")}</Link>.
+        </p>
+        <LegalFooter />
       </div>
     </div>
   );
 }
+
