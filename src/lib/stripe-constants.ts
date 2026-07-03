@@ -33,7 +33,7 @@ export const FEATURE_MIN_PLAN: Record<string, PlanTier> = {
   shared_budgets: "pro",
   vault: "pro",
   multi_currency: "pro",
-  ai_advisor: "max",
+  ai_advisor: "pro",
   real_estate: "max",
 };
 
