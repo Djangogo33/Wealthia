@@ -323,7 +323,20 @@ const translations = {
       loginConsentAnd: "et notre",
     },
     advisor: {
-      disclaimer: "Les analyses et suggestions de Wealthia sont fournies à titre informatif uniquement. Elles ne constituent pas des conseils en investissement réglementés. Consultez un professionnel agréé pour toute décision financière importante.",
+      title: "Conseiller IA",
+      disclaimer: "Les analyses de Wealthia AI sont fournies à titre informatif uniquement et ne constituent pas des conseils en investissement réglementés. Consultez un professionnel agréé pour toute décision financière importante.",
+      newConversation: "Nouvelle conversation",
+      placeholder: "Posez une question financière…",
+      send: "Envoyer",
+      thinking: "Analyse en cours…",
+      suggestion1: "Analyse ma santé financière",
+      suggestion2: "Comment réduire mes dépenses ?",
+      suggestion3: "Suis-je en bonne voie pour mes objectifs ?",
+      suggestion4: "Projette mon patrimoine sur 5 ans",
+      greeting: "Bonjour ! Je suis votre conseiller financier personnel. Comment puis-je vous aider ?",
+      lockedTitle: "Fonctionnalité Pro",
+      lockedHint: "Passez à Pro pour accéder au conseiller IA personnalisé.",
+      errorRetry: "Une erreur est survenue. Réessayez.",
     },
     reports: {
 
@@ -681,7 +694,20 @@ const translations = {
       loginConsentAnd: "and our",
     },
     advisor: {
-      disclaimer: "Wealthia's analyses and suggestions are for informational purposes only. They do not constitute regulated investment advice. Consult a licensed professional for any major financial decision.",
+      title: "AI Advisor",
+      disclaimer: "Wealthia AI analyses are for informational purposes only and do not constitute regulated investment advice. Consult a licensed professional for any major financial decision.",
+      newConversation: "New conversation",
+      placeholder: "Ask a financial question…",
+      send: "Send",
+      thinking: "Analyzing…",
+      suggestion1: "Analyze my financial health",
+      suggestion2: "How can I reduce my expenses?",
+      suggestion3: "Am I on track for my goals?",
+      suggestion4: "Project my wealth over 5 years",
+      greeting: "Hello! I'm your personal financial advisor. How can I help you?",
+      lockedTitle: "Pro Feature",
+      lockedHint: "Upgrade to Pro to access the personalized AI advisor.",
+      errorRetry: "An error occurred. Please try again.",
     },
     reports: {
 
