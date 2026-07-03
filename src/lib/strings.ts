@@ -323,7 +323,20 @@ const translations = {
       loginConsentAnd: "et notre",
     },
     advisor: {
-      disclaimer: "Les analyses et suggestions de Wealthia sont fournies à titre informatif uniquement. Elles ne constituent pas des conseils en investissement réglementés. Consultez un professionnel agréé pour toute décision financière importante.",
+      title: "Conseiller IA",
+      disclaimer: "Les analyses de Wealthia AI sont fournies à titre informatif uniquement et ne constituent pas des conseils en investissement réglementés. Consultez un professionnel agréé pour toute décision financière importante.",
+      newConversation: "Nouvelle conversation",
+      placeholder: "Posez une question financière…",
+      send: "Envoyer",
+      thinking: "Analyse en cours…",
+      suggestion1: "Analyse ma santé financière",
+      suggestion2: "Comment réduire mes dépenses ?",
+      suggestion3: "Suis-je en bonne voie pour mes objectifs ?",
+      suggestion4: "Projette mon patrimoine sur 5 ans",
+      greeting: "Bonjour ! Je suis votre conseiller financier personnel. Comment puis-je vous aider ?",
+      lockedTitle: "Fonctionnalité Pro",
+      lockedHint: "Passez à Pro pour accéder au conseiller IA personnalisé.",
+      errorRetry: "Une erreur est survenue. Réessayez.",
     },
     reports: {
 
