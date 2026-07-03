@@ -694,7 +694,20 @@ const translations = {
       loginConsentAnd: "and our",
     },
     advisor: {
-      disclaimer: "Wealthia's analyses and suggestions are for informational purposes only. They do not constitute regulated investment advice. Consult a licensed professional for any major financial decision.",
+      title: "AI Advisor",
+      disclaimer: "Wealthia AI analyses are for informational purposes only and do not constitute regulated investment advice. Consult a licensed professional for any major financial decision.",
+      newConversation: "New conversation",
+      placeholder: "Ask a financial question…",
+      send: "Send",
+      thinking: "Analyzing…",
+      suggestion1: "Analyze my financial health",
+      suggestion2: "How can I reduce my expenses?",
+      suggestion3: "Am I on track for my goals?",
+      suggestion4: "Project my wealth over 5 years",
+      greeting: "Hello! I'm your personal financial advisor. How can I help you?",
+      lockedTitle: "Pro Feature",
+      lockedHint: "Upgrade to Pro to access the personalized AI advisor.",
+      errorRetry: "An error occurred. Please try again.",
     },
     reports: {
 
