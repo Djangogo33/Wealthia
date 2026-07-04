@@ -18,6 +18,7 @@ import {
   demoDebts,
   demoGoals,
   demoAssets,
+  demoReplies,
 } from "@/data/demo";
 import { toast } from "sonner";
 
@@ -44,35 +45,11 @@ type FinancialContext = {
   total_abonnements_mois: number;
 };
 
-const demoReplies: { match: RegExp; reply: string }[] = [
-  {
-    match: /santé|health|analyse/i,
-    reply:
-      "D'après vos données démo, votre taux d'épargne de 70,4% est excellent ! Vos principales dépenses sont l'alimentation (30%), le logement (27%) et le transport (5%). Je recommande de maintenir ce rythme et d'augmenter progressivement vos investissements.",
-  },
-  {
-    match: /dépense|reduce|réduire/i,
-    reply:
-      "Vos abonnements représentent 24,97€/mois. Une revue régulière des abonnements inutilisés peut libérer du budget. Votre budget alimentation est bien maîtrisé à 281,80€ ce mois.",
-  },
-  {
-    match: /objectif|goal|voie/i,
-    reply:
-      "Vous êtes à 52% de votre objectif Voyage Japon (1 850€ / 3 500€). À votre rythme d'épargne actuel, vous l'atteindrez dans environ 5 mois.",
-  },
-  {
-    match: /patrimoine|5 ans|projette/i,
-    reply:
-      "En projetant votre épargne actuelle sur 5 ans avec un rendement modéré (4%/an), votre patrimoine pourrait atteindre environ 28 000€. Diversifier avec un PEA pourrait améliorer ce rendement.",
-  },
-];
-
 function demoReply(question: string): string {
-  const match = demoReplies.find((d) => d.match.test(question));
-  return (
-    match?.reply ??
-    "En mode démo, je ne peux pas analyser vos vraies données. Créez un compte pour accéder à des conseils personnalisés basés sur votre situation financière réelle."
-  );
+  if (/santé|health|analyse|bilan/i.test(question)) return demoReplies.sante;
+  if (/dépense|reduce|réduire|abonnement/i.test(question)) return demoReplies.depenses;
+  if (/objectif|goal|voie|japon/i.test(question)) return demoReplies.objectifs;
+  return demoReplies.default;
 }
 
 function AdvisorPage() {
