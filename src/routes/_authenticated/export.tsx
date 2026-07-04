@@ -369,7 +369,7 @@ function ExportPage() {
 
   const formats: {
     id: string;
-    icon: JSX.Element;
+    icon: React.ReactNode;
     title: string;
     desc: string;
     tier: "free" | "pro" | "max";

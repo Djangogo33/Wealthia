@@ -20,6 +20,7 @@ import { Route as LegalCguRouteImport } from './routes/legal.cgu'
 import { Route as AuthenticatedTransactionsRouteImport } from './routes/_authenticated/transactions'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
+import { Route as AuthenticatedExportRouteImport } from './routes/_authenticated/export'
 import { Route as AuthenticatedConseillerRouteImport } from './routes/_authenticated/conseiller'
 import { Route as AuthenticatedComptesRouteImport } from './routes/_authenticated/comptes'
 import { Route as AuthenticatedBourseRouteImport } from './routes/_authenticated/bourse'
@@ -82,6 +83,11 @@ const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
   path: '/reports',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedExportRoute = AuthenticatedExportRouteImport.update({
+  id: '/export',
+  path: '/export',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedConseillerRoute = AuthenticatedConseillerRouteImport.update({
   id: '/conseiller',
   path: '/conseiller',
@@ -122,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/bourse': typeof AuthenticatedBourseRoute
   '/comptes': typeof AuthenticatedComptesRoute
   '/conseiller': typeof AuthenticatedConseillerRoute
+  '/export': typeof AuthenticatedExportRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/transactions': typeof AuthenticatedTransactionsRoute
@@ -139,6 +146,7 @@ export interface FileRoutesByTo {
   '/bourse': typeof AuthenticatedBourseRoute
   '/comptes': typeof AuthenticatedComptesRoute
   '/conseiller': typeof AuthenticatedConseillerRoute
+  '/export': typeof AuthenticatedExportRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/transactions': typeof AuthenticatedTransactionsRoute
@@ -159,6 +167,7 @@ export interface FileRoutesById {
   '/_authenticated/bourse': typeof AuthenticatedBourseRoute
   '/_authenticated/comptes': typeof AuthenticatedComptesRoute
   '/_authenticated/conseiller': typeof AuthenticatedConseillerRoute
+  '/_authenticated/export': typeof AuthenticatedExportRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/transactions': typeof AuthenticatedTransactionsRoute
@@ -180,6 +189,7 @@ export interface FileRouteTypes {
     | '/bourse'
     | '/comptes'
     | '/conseiller'
+    | '/export'
     | '/reports'
     | '/settings'
     | '/transactions'
@@ -197,6 +207,7 @@ export interface FileRouteTypes {
     | '/bourse'
     | '/comptes'
     | '/conseiller'
+    | '/export'
     | '/reports'
     | '/settings'
     | '/transactions'
@@ -216,6 +227,7 @@ export interface FileRouteTypes {
     | '/_authenticated/bourse'
     | '/_authenticated/comptes'
     | '/_authenticated/conseiller'
+    | '/_authenticated/export'
     | '/_authenticated/reports'
     | '/_authenticated/settings'
     | '/_authenticated/transactions'
@@ -319,6 +331,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReportsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/export': {
+      id: '/_authenticated/export'
+      path: '/export'
+      fullPath: '/export'
+      preLoaderRoute: typeof AuthenticatedExportRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/conseiller': {
       id: '/_authenticated/conseiller'
       path: '/conseiller'
@@ -369,6 +388,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedBourseRoute: typeof AuthenticatedBourseRoute
   AuthenticatedComptesRoute: typeof AuthenticatedComptesRoute
   AuthenticatedConseillerRoute: typeof AuthenticatedConseillerRoute
+  AuthenticatedExportRoute: typeof AuthenticatedExportRoute
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedTransactionsRoute: typeof AuthenticatedTransactionsRoute
@@ -380,6 +400,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedBourseRoute: AuthenticatedBourseRoute,
   AuthenticatedComptesRoute: AuthenticatedComptesRoute,
   AuthenticatedConseillerRoute: AuthenticatedConseillerRoute,
+  AuthenticatedExportRoute: AuthenticatedExportRoute,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedTransactionsRoute: AuthenticatedTransactionsRoute,
