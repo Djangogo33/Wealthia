@@ -28,7 +28,7 @@ export const FEATURE_MIN_PLAN: Record<string, PlanTier> = {
   unlimited_accounts: "pro",
   export_pdf: "pro",
   export_xlsx: "pro",
-  export_json: "pro",
+  export_json: "max",
   open_banking: "pro",
   shared_budgets: "pro",
   vault: "pro",
