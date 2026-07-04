@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Settings as SettingsIcon, Copy, Share2, LogOut, Globe, Trash2 } from "lucide-react";
+import { Settings as SettingsIcon, Copy, Share2, LogOut, Globe, Trash2, Download } from "lucide-react";
 import { useTranslation } from "@/lib/strings";
 import { useAuth } from "@/hooks/use-auth";
 import { useDemo } from "@/hooks/use-demo";
@@ -198,6 +198,20 @@ function SettingsPage() {
             <div className="truncate text-sm text-[var(--muted-foreground)]">{profile?.email}</div>
           </div>
         </div>
+        <Button
+          variant="outline"
+          onClick={() => {
+            if (isDemo) {
+              toast.info(t("export.demoBlocked"));
+              return;
+            }
+            navigate({ to: "/export" });
+          }}
+          className="mt-4 w-full"
+        >
+          <Download className="mr-2 h-4 w-4" />
+          {t("settings.exportData")}
+        </Button>
       </section>
 
       {/* Plan */}
