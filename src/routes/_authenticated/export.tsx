@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import type React from "react";
 import { useState } from "react";
 import { ArrowLeft, FileText, FileSpreadsheet, FileCode, Braces, Lock, Loader2 } from "lucide-react";
 import { format } from "date-fns";
