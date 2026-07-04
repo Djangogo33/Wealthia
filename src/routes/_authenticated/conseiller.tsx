@@ -18,6 +18,7 @@ import {
   demoDebts,
   demoGoals,
   demoAssets,
+  demoReplies,
 } from "@/data/demo";
 import { toast } from "sonner";
 

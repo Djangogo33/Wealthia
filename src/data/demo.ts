@@ -144,3 +144,23 @@ export const demoNotifications: DemoNotification[] = [
   { id: "n1", title: "Prélèvement Netflix", body: "Prélèvement Netflix de 13,99€ aujourd'hui sur BoursoBank", read: false, created_at: "2026-06-22T08:00:00Z" },
   { id: "n2", title: "Rappel Spotify",      body: "Spotify de 9,99€ prélevé dans 3 jours",                       read: true,  created_at: "2026-06-20T08:00:00Z" },
 ];
+
+export const demoReplies = {
+  default: "🔒 Mode démo — créez un compte pour des conseils personnalisés !",
+  sante: `📊 Bilan démo :
+• 💰 Épargne : **70,4%** → excellent !
+• 🛒 Top dépense : Alimentation **281 €**
+• 📈 Portefeuille : **54 320 €** (+4,1%)
+
+👉 Continuez ce rythme, vous êtes en très bonne voie ! ✅`,
+  depenses: `💸 Vos abonnements :
+• 📺 Netflix + Spotify + iCloud = **24,97 €/mois**
+• ✂️ Économie possible si vous supprimez 1 abonnement : **~10 €/mois**
+
+👉 Revoyez vos abonnements chaque trimestre ! 🔄`,
+  objectifs: `🎯 Vos objectifs :
+• ✈️ Voyage Japon : **52%** (1 850 € / 3 500 €) → dans ~5 mois
+• 🏠 Apport immo : **41%** (12 400 € / 30 000 €) → dans ~2 ans
+
+👉 Augmentez l'épargne mensuelle de **50 €** pour gagner 2 mois ! 💪`,
+};
