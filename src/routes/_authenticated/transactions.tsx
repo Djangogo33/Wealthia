@@ -51,6 +51,7 @@ type Tx = {
   date: string;
   notes: string | null;
   ai_categorized: boolean;
+  auto_generated: boolean;
   account_id: string | null;
   category_id: string | null;
   created_at: string;
