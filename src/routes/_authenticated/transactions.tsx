@@ -82,6 +82,7 @@ function TransactionsPage() {
   const [limit, setLimit] = useState(PAGE_SIZE);
   const [addOpen, setAddOpen] = useState(false);
   const [pendingDelete, setPendingDelete] = useState<Tx | null>(null);
+  const [pendingUndo, setPendingUndo] = useState<Tx | null>(null);
 
   const txQuery = useQuery({
     queryKey: ["transactions", isDemo ? "demo" : user?.id, filter, limit],
