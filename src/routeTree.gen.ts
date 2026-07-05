@@ -27,6 +27,7 @@ import { Route as AuthenticatedBourseRouteImport } from './routes/_authenticated
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ApiStripeCreateCheckoutSessionRouteImport } from './routes/api/stripe/create-checkout-session'
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe/webhook'
+import { Route as ApiPublicHooksSendSubscriptionRemindersRouteImport } from './routes/api/public/hooks/send-subscription-reminders'
 import { Route as ApiPublicHooksProcessSubscriptionsRouteImport } from './routes/api/public/hooks/process-subscriptions'
 
 const SignupRoute = SignupRouteImport.update({
@@ -120,6 +121,12 @@ const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
   path: '/api/public/stripe/webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicHooksSendSubscriptionRemindersRoute =
+  ApiPublicHooksSendSubscriptionRemindersRouteImport.update({
+    id: '/api/public/hooks/send-subscription-reminders',
+    path: '/api/public/hooks/send-subscription-reminders',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicHooksProcessSubscriptionsRoute =
   ApiPublicHooksProcessSubscriptionsRouteImport.update({
     id: '/api/public/hooks/process-subscriptions',
@@ -145,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/legal/mentions-legales': typeof LegalMentionsLegalesRoute
   '/api/stripe/create-checkout-session': typeof ApiStripeCreateCheckoutSessionRoute
   '/api/public/hooks/process-subscriptions': typeof ApiPublicHooksProcessSubscriptionsRoute
+  '/api/public/hooks/send-subscription-reminders': typeof ApiPublicHooksSendSubscriptionRemindersRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -165,6 +173,7 @@ export interface FileRoutesByTo {
   '/': typeof AuthenticatedIndexRoute
   '/api/stripe/create-checkout-session': typeof ApiStripeCreateCheckoutSessionRoute
   '/api/public/hooks/process-subscriptions': typeof ApiPublicHooksProcessSubscriptionsRoute
+  '/api/public/hooks/send-subscription-reminders': typeof ApiPublicHooksSendSubscriptionRemindersRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
 }
 export interface FileRoutesById {
@@ -187,6 +196,7 @@ export interface FileRoutesById {
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/api/stripe/create-checkout-session': typeof ApiStripeCreateCheckoutSessionRoute
   '/api/public/hooks/process-subscriptions': typeof ApiPublicHooksProcessSubscriptionsRoute
+  '/api/public/hooks/send-subscription-reminders': typeof ApiPublicHooksSendSubscriptionRemindersRoute
   '/api/public/stripe/webhook': typeof ApiPublicStripeWebhookRoute
 }
 export interface FileRouteTypes {
@@ -209,6 +219,7 @@ export interface FileRouteTypes {
     | '/legal/mentions-legales'
     | '/api/stripe/create-checkout-session'
     | '/api/public/hooks/process-subscriptions'
+    | '/api/public/hooks/send-subscription-reminders'
     | '/api/public/stripe/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -229,6 +240,7 @@ export interface FileRouteTypes {
     | '/'
     | '/api/stripe/create-checkout-session'
     | '/api/public/hooks/process-subscriptions'
+    | '/api/public/hooks/send-subscription-reminders'
     | '/api/public/stripe/webhook'
   id:
     | '__root__'
@@ -250,6 +262,7 @@ export interface FileRouteTypes {
     | '/_authenticated/'
     | '/api/stripe/create-checkout-session'
     | '/api/public/hooks/process-subscriptions'
+    | '/api/public/hooks/send-subscription-reminders'
     | '/api/public/stripe/webhook'
   fileRoutesById: FileRoutesById
 }
@@ -263,6 +276,7 @@ export interface RootRouteChildren {
   LegalMentionsLegalesRoute: typeof LegalMentionsLegalesRoute
   ApiStripeCreateCheckoutSessionRoute: typeof ApiStripeCreateCheckoutSessionRoute
   ApiPublicHooksProcessSubscriptionsRoute: typeof ApiPublicHooksProcessSubscriptionsRoute
+  ApiPublicHooksSendSubscriptionRemindersRoute: typeof ApiPublicHooksSendSubscriptionRemindersRoute
   ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
 }
 
@@ -394,6 +408,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicStripeWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/send-subscription-reminders': {
+      id: '/api/public/hooks/send-subscription-reminders'
+      path: '/api/public/hooks/send-subscription-reminders'
+      fullPath: '/api/public/hooks/send-subscription-reminders'
+      preLoaderRoute: typeof ApiPublicHooksSendSubscriptionRemindersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/process-subscriptions': {
       id: '/api/public/hooks/process-subscriptions'
       path: '/api/public/hooks/process-subscriptions'
@@ -443,6 +464,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiStripeCreateCheckoutSessionRoute: ApiStripeCreateCheckoutSessionRoute,
   ApiPublicHooksProcessSubscriptionsRoute:
     ApiPublicHooksProcessSubscriptionsRoute,
+  ApiPublicHooksSendSubscriptionRemindersRoute:
+    ApiPublicHooksSendSubscriptionRemindersRoute,
   ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
 }
 export const routeTree = rootRouteImport
