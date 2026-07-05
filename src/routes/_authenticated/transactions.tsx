@@ -192,6 +192,46 @@ function TransactionsPage() {
     },
   });
 
+  const undoMutation = useMutation({
+    mutationFn: async ({ tx, alsoPause }: { tx: Tx; alsoPause: boolean }) => {
+      if (isDemo) {
+        toast.info(t("demo.writeBlocked"));
+        return;
+      }
+      const { error } = await supabase
+        .from("transactions")
+        .update({ deleted_at: new Date().toISOString() })
+        .eq("id", tx.id);
+      if (error) throw error;
+      // Credit back
+      if (tx.account_id) {
+        const delta = tx.type === "income" ? -tx.amount : tx.amount;
+        const acct = accountsQuery.data?.find((a) => a.id === tx.account_id);
+        if (acct) {
+          await supabase
+            .from("accounts")
+            .update({ balance: Number(acct.balance) + delta })
+            .eq("id", tx.account_id);
+        }
+      }
+      if (alsoPause && user) {
+        // Best-effort match by name + account
+        await supabase
+          .from("subscriptions_tracked")
+          .update({ paused: true })
+          .eq("user_id", user.id)
+          .eq("name", tx.label)
+          .is("deleted_at", null);
+      }
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["transactions"] });
+      qc.invalidateQueries({ queryKey: ["accounts"] });
+      qc.invalidateQueries({ queryKey: ["home-stats"] });
+      qc.invalidateQueries({ queryKey: ["subscriptions"] });
+    },
+  });
+
   const txs = txQuery.data ?? [];
   const groups = useMemo(() => groupByDate(txs), [txs]);
 
