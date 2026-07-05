@@ -336,11 +336,44 @@ function TransactionsPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <Dialog open={!!pendingUndo} onOpenChange={(o) => !o && setPendingUndo(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("subscriptions.undoTitle")}</DialogTitle>
+            <DialogDescription>{t("subscriptions.undoBody")}</DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex-col gap-2 sm:flex-col">
+            <Button
+              onClick={() => {
+                if (pendingUndo) undoMutation.mutate({ tx: pendingUndo, alsoPause: false });
+                setPendingUndo(null);
+              }}
+              className="w-full"
+            >
+              {t("subscriptions.undoOnly")}
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                if (pendingUndo) undoMutation.mutate({ tx: pendingUndo, alsoPause: true });
+                setPendingUndo(null);
+              }}
+              className="w-full"
+            >
+              {t("subscriptions.undoAndPause")}
+            </Button>
+            <Button variant="ghost" onClick={() => setPendingUndo(null)} className="w-full">
+              {t("subscriptions.cancel")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
 
-function TxRow({ tx, onDelete }: { tx: Tx; onDelete: () => void }) {
+function TxRow({ tx, onDelete, onUndo }: { tx: Tx; onDelete: () => void; onUndo: () => void }) {
   const { t } = useTranslation();
   const isExpense = tx.type === "expense";
   const amount = isExpense ? -Math.abs(Number(tx.amount)) : Math.abs(Number(tx.amount));
@@ -354,12 +387,18 @@ function TxRow({ tx, onDelete }: { tx: Tx; onDelete: () => void }) {
         {isExpense ? <ArrowUp className="h-5 w-5" /> : <ArrowDown className="h-5 w-5" />}
       </span>
       <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <span className="truncate font-medium text-[var(--foreground)]">{tx.label}</span>
           {tx.ai_categorized && (
             <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[var(--gold)]/15 px-2 py-0.5 text-[10px] font-semibold text-[var(--gold)]">
               <Sparkles className="h-3 w-3" />
               {t("transactions.aiBadge")}
+            </span>
+          )}
+          {tx.auto_generated && (
+            <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[var(--muted)] px-2 py-0.5 text-[10px] font-semibold text-[var(--muted-foreground)]">
+              <Settings className="h-3 w-3" />
+              {t("subscriptions.autoBadge")}
             </span>
           )}
         </div>
@@ -375,6 +414,15 @@ function TxRow({ tx, onDelete }: { tx: Tx; onDelete: () => void }) {
         {amount >= 0 ? "+" : "-"}
         {formatEUR(Math.abs(amount))}
       </div>
+      {tx.auto_generated && (
+        <button
+          onClick={onUndo}
+          aria-label={t("subscriptions.undoTitle")}
+          className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[var(--border)] text-[var(--muted-foreground)] transition hover:bg-[var(--muted)]"
+        >
+          <RotateCcw className="h-4 w-4" />
+        </button>
+      )}
       <button
         onClick={onDelete}
         aria-label="Delete"
@@ -383,6 +431,7 @@ function TxRow({ tx, onDelete }: { tx: Tx; onDelete: () => void }) {
         <Trash2 className="h-4 w-4" />
       </button>
     </div>
+
   );
 }
 
