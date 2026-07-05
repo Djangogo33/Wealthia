@@ -93,6 +93,7 @@ function TransactionsPage() {
           date: tx.date,
           notes: null,
           ai_categorized: tx.ai_categorized,
+          auto_generated: tx.auto_generated ?? false,
           account_id: tx.account,
           category_id: tx.category,
           created_at: tx.date,
@@ -103,7 +104,7 @@ function TransactionsPage() {
       let q = supabase
         .from("transactions")
         .select(
-          "id,amount,label,type,date,notes,ai_categorized,account_id,category_id,created_at,category:categories(name),account:accounts(name)",
+          "id,amount,label,type,date,notes,ai_categorized,auto_generated,account_id,category_id,created_at,category:categories(name),account:accounts(name)",
         )
         .is("deleted_at", null)
         .order("date", { ascending: false })
