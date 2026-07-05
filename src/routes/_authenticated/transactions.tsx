@@ -3,7 +3,7 @@ import { useTranslation } from "@/lib/strings";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowDown, ArrowUp, Plus, Sparkles, Trash2, X } from "lucide-react";
+import { ArrowDown, ArrowUp, Plus, RotateCcw, Settings, Sparkles, Trash2, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { formatEUR } from "@/lib/format";
