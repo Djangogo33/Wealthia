@@ -3,7 +3,7 @@ import { useTranslation } from "@/lib/strings";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowDown, ArrowUp, Plus, Sparkles, Trash2, X } from "lucide-react";
+import { ArrowDown, ArrowUp, Plus, RotateCcw, Settings, Sparkles, Trash2, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { formatEUR } from "@/lib/format";
@@ -18,6 +18,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -51,6 +59,7 @@ type Tx = {
   date: string;
   notes: string | null;
   ai_categorized: boolean;
+  auto_generated: boolean;
   account_id: string | null;
   category_id: string | null;
   created_at: string;
@@ -73,6 +82,7 @@ function TransactionsPage() {
   const [limit, setLimit] = useState(PAGE_SIZE);
   const [addOpen, setAddOpen] = useState(false);
   const [pendingDelete, setPendingDelete] = useState<Tx | null>(null);
+  const [pendingUndo, setPendingUndo] = useState<Tx | null>(null);
 
   const txQuery = useQuery({
     queryKey: ["transactions", isDemo ? "demo" : user?.id, filter, limit],
@@ -92,6 +102,7 @@ function TransactionsPage() {
           date: tx.date,
           notes: null,
           ai_categorized: tx.ai_categorized,
+          auto_generated: tx.auto_generated ?? false,
           account_id: tx.account,
           category_id: tx.category,
           created_at: tx.date,
@@ -102,7 +113,7 @@ function TransactionsPage() {
       let q = supabase
         .from("transactions")
         .select(
-          "id,amount,label,type,date,notes,ai_categorized,account_id,category_id,created_at,category:categories(name),account:accounts(name)",
+          "id,amount,label,type,date,notes,ai_categorized,auto_generated,account_id,category_id,created_at,category:categories(name),account:accounts(name)",
         )
         .is("deleted_at", null)
         .order("date", { ascending: false })
@@ -181,6 +192,46 @@ function TransactionsPage() {
     },
   });
 
+  const undoMutation = useMutation({
+    mutationFn: async ({ tx, alsoPause }: { tx: Tx; alsoPause: boolean }) => {
+      if (isDemo) {
+        toast.info(t("demo.writeBlocked"));
+        return;
+      }
+      const { error } = await supabase
+        .from("transactions")
+        .update({ deleted_at: new Date().toISOString() })
+        .eq("id", tx.id);
+      if (error) throw error;
+      // Credit back
+      if (tx.account_id) {
+        const delta = tx.type === "income" ? -tx.amount : tx.amount;
+        const acct = accountsQuery.data?.find((a) => a.id === tx.account_id);
+        if (acct) {
+          await supabase
+            .from("accounts")
+            .update({ balance: Number(acct.balance) + delta })
+            .eq("id", tx.account_id);
+        }
+      }
+      if (alsoPause && user) {
+        // Best-effort match by name + account
+        await supabase
+          .from("subscriptions_tracked")
+          .update({ paused: true })
+          .eq("user_id", user.id)
+          .eq("name", tx.label)
+          .is("deleted_at", null);
+      }
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["transactions"] });
+      qc.invalidateQueries({ queryKey: ["accounts"] });
+      qc.invalidateQueries({ queryKey: ["home-stats"] });
+      qc.invalidateQueries({ queryKey: ["subscriptions"] });
+    },
+  });
+
   const txs = txQuery.data ?? [];
   const groups = useMemo(() => groupByDate(txs), [txs]);
 
@@ -239,7 +290,7 @@ function TransactionsPage() {
                 {items.map((tx, i) => (
                   <div key={tx.id}>
                     {i > 0 && <div className="ml-[76px] h-px bg-[var(--border)]" />}
-                    <TxRow tx={tx} onDelete={() => setPendingDelete(tx)} />
+                    <TxRow tx={tx} onDelete={() => setPendingDelete(tx)} onUndo={() => setPendingUndo(tx)} />
                   </div>
                 ))}
               </div>
@@ -285,11 +336,44 @@ function TransactionsPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <Dialog open={!!pendingUndo} onOpenChange={(o) => !o && setPendingUndo(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("subscriptions.undoTitle")}</DialogTitle>
+            <DialogDescription>{t("subscriptions.undoBody")}</DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex-col gap-2 sm:flex-col">
+            <Button
+              onClick={() => {
+                if (pendingUndo) undoMutation.mutate({ tx: pendingUndo, alsoPause: false });
+                setPendingUndo(null);
+              }}
+              className="w-full"
+            >
+              {t("subscriptions.undoOnly")}
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                if (pendingUndo) undoMutation.mutate({ tx: pendingUndo, alsoPause: true });
+                setPendingUndo(null);
+              }}
+              className="w-full"
+            >
+              {t("subscriptions.undoAndPause")}
+            </Button>
+            <Button variant="ghost" onClick={() => setPendingUndo(null)} className="w-full">
+              {t("subscriptions.cancel")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
 
-function TxRow({ tx, onDelete }: { tx: Tx; onDelete: () => void }) {
+function TxRow({ tx, onDelete, onUndo }: { tx: Tx; onDelete: () => void; onUndo: () => void }) {
   const { t } = useTranslation();
   const isExpense = tx.type === "expense";
   const amount = isExpense ? -Math.abs(Number(tx.amount)) : Math.abs(Number(tx.amount));
@@ -303,12 +387,18 @@ function TxRow({ tx, onDelete }: { tx: Tx; onDelete: () => void }) {
         {isExpense ? <ArrowUp className="h-5 w-5" /> : <ArrowDown className="h-5 w-5" />}
       </span>
       <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <span className="truncate font-medium text-[var(--foreground)]">{tx.label}</span>
           {tx.ai_categorized && (
             <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[var(--gold)]/15 px-2 py-0.5 text-[10px] font-semibold text-[var(--gold)]">
               <Sparkles className="h-3 w-3" />
               {t("transactions.aiBadge")}
+            </span>
+          )}
+          {tx.auto_generated && (
+            <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[var(--muted)] px-2 py-0.5 text-[10px] font-semibold text-[var(--muted-foreground)]">
+              <Settings className="h-3 w-3" />
+              {t("subscriptions.autoBadge")}
             </span>
           )}
         </div>
@@ -324,6 +414,15 @@ function TxRow({ tx, onDelete }: { tx: Tx; onDelete: () => void }) {
         {amount >= 0 ? "+" : "-"}
         {formatEUR(Math.abs(amount))}
       </div>
+      {tx.auto_generated && (
+        <button
+          onClick={onUndo}
+          aria-label={t("subscriptions.undoTitle")}
+          className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[var(--border)] text-[var(--muted-foreground)] transition hover:bg-[var(--muted)]"
+        >
+          <RotateCcw className="h-4 w-4" />
+        </button>
+      )}
       <button
         onClick={onDelete}
         aria-label="Delete"
@@ -332,6 +431,7 @@ function TxRow({ tx, onDelete }: { tx: Tx; onDelete: () => void }) {
         <Trash2 className="h-4 w-4" />
       </button>
     </div>
+
   );
 }
 

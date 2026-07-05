@@ -1,0 +1,2 @@
+ALTER TABLE public.transactions ADD COLUMN IF NOT EXISTS auto_generated boolean NOT NULL DEFAULT false;
+CREATE INDEX IF NOT EXISTS idx_tx_auto_generated ON public.transactions(user_id, auto_generated) WHERE auto_generated = true;

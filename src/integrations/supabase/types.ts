@@ -591,6 +591,7 @@ export type Database = {
           account_id: string | null
           ai_categorized: boolean
           amount: number
+          auto_generated: boolean
           category_id: string | null
           created_at: string
           date: string
@@ -605,6 +606,7 @@ export type Database = {
           account_id?: string | null
           ai_categorized?: boolean
           amount: number
+          auto_generated?: boolean
           category_id?: string | null
           created_at?: string
           date?: string
@@ -619,6 +621,7 @@ export type Database = {
           account_id?: string | null
           ai_categorized?: boolean
           amount?: number
+          auto_generated?: boolean
           category_id?: string | null
           created_at?: string
           date?: string
