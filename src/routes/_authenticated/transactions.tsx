@@ -290,7 +290,7 @@ function TransactionsPage() {
                 {items.map((tx, i) => (
                   <div key={tx.id}>
                     {i > 0 && <div className="ml-[76px] h-px bg-[var(--border)]" />}
-                    <TxRow tx={tx} onDelete={() => setPendingDelete(tx)} />
+                    <TxRow tx={tx} onDelete={() => setPendingDelete(tx)} onUndo={() => setPendingUndo(tx)} />
                   </div>
                 ))}
               </div>
