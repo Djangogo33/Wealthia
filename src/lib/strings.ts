@@ -17,8 +17,8 @@ const translations = {
       advisor: "Conseiller",
     },
     home: {
-      hello: "Bonjour,",
-      overview: "Aperçu de vos finances",
+      hello: "Aperçu de votre patrimoine",
+      overview: "Suivez vos comptes, budgets et investissements en un coup d'œil",
       totalBalance: "Solde Total",
       income: "Revenus",
       expenses: "Dépenses",
