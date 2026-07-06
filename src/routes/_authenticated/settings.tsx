@@ -76,45 +76,13 @@ function SettingsPage() {
     if (!profile) return;
     setApplying(true);
     try {
-      const { data: code, error: e1 } = await supabase
-        .from("promo_codes")
-        .select("*")
-        .eq("code", promo.trim().toUpperCase())
-        .eq("active", true)
-        .maybeSingle();
-      if (e1 || !code) {
+      const { data, error } = await supabase.rpc("apply_promo_code", {
+        _code: promo.trim(),
+      });
+      if (error || !data || !(data as { ok?: boolean }).ok) {
         toast.error(t("settings.promoError"));
         return;
       }
-      if (code.expires_at && new Date(code.expires_at) < new Date()) {
-        toast.error(t("settings.promoError"));
-        return;
-      }
-      if (code.max_uses && code.uses_count >= code.max_uses) {
-        toast.error(t("settings.promoError"));
-        return;
-      }
-      const { error: useErr } = await supabase
-        .from("promo_code_uses")
-        .insert({ code_id: code.id, user_id: profile.id });
-      if (useErr) {
-        toast.error(t("settings.promoError"));
-        return;
-      }
-      const newExpiry = new Date(
-        Math.max(
-          profile.plan_expires_at ? new Date(profile.plan_expires_at).getTime() : Date.now(),
-          Date.now(),
-        ) + code.duration_days * 86400000,
-      ).toISOString();
-      await supabase
-        .from("profiles")
-        .update({ plan: code.plan as "free" | "pro" | "max", plan_expires_at: newExpiry })
-        .eq("id", profile.id);
-      await supabase
-        .from("promo_codes")
-        .update({ uses_count: code.uses_count + 1 })
-        .eq("id", code.id);
       toast.success(t("settings.promoSuccess"));
       setPromo("");
       await reloadProfile();

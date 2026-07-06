@@ -675,6 +675,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      apply_promo_code: { Args: { _code: string }; Returns: Json }
       grant_referral_rewards: {
         Args: { _referred_id: string }
         Returns: undefined

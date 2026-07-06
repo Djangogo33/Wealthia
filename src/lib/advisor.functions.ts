@@ -29,7 +29,6 @@ const inputSchema = z.object({
     .min(1)
     .max(20),
   financialContext: financialContextSchema,
-  plan: z.enum(["free", "pro", "max"]),
 });
 
 function buildSystemPrompt(ctx: z.infer<typeof financialContextSchema>, plan: string): string {
@@ -80,8 +79,20 @@ RÈGLES IMPORTANTES :
 export const aiAdvisorChat = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => inputSchema.parse(input))
-  .handler(async ({ data }) => {
-    if (data.plan === "free") {
+  .handler(async ({ data, context }) => {
+    // Server-side plan lookup — never trust client-supplied plan value
+    const { data: profile } = await context.supabase
+      .from("profiles")
+      .select("plan, plan_expires_at")
+      .eq("id", context.userId)
+      .single();
+    const now = Date.now();
+    const expired = profile?.plan_expires_at
+      ? new Date(profile.plan_expires_at).getTime() < now
+      : false;
+    const plan = (expired ? "free" : profile?.plan) ?? "free";
+
+    if (plan === "free") {
       return { reply: "", error: "plan_required" as const };
     }
     const key = process.env.LOVABLE_API_KEY;
@@ -92,7 +103,7 @@ export const aiAdvisorChat = createServerFn({ method: "POST" })
     try {
       const { text } = await generateText({
         model: gateway("google/gemini-3-flash-preview"),
-        system: buildSystemPrompt(data.financialContext, data.plan),
+        system: buildSystemPrompt(data.financialContext, plan),
         messages: recent.map((m) => ({ role: m.role, content: m.content })),
       });
       return { reply: text, error: null };

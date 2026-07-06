@@ -159,7 +159,7 @@ function AdvisorPage() {
         .map((m) => ({ role: m.role, content: m.content }));
 
       const res = await chat({
-        data: { messages: history, financialContext: ctx, plan: plan as "pro" | "max" },
+        data: { messages: history, financialContext: ctx },
       });
 
       if (res.error || !res.reply) {

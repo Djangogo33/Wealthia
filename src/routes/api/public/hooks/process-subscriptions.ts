@@ -16,8 +16,9 @@ export const Route = createFileRoute("/api/public/hooks/process-subscriptions")(
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const apiKey = request.headers.get("apikey");
-        if (!apiKey || apiKey !== process.env.SUPABASE_PUBLISHABLE_KEY) {
+        const cronSecret = process.env.CRON_SECRET;
+        const provided = request.headers.get("x-cron-secret");
+        if (!cronSecret || !provided || provided !== cronSecret) {
           return new Response("unauthorized", { status: 401 });
         }
 
