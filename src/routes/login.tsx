@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import logoAsset from "@/assets/wealthia-logo.png.asset.json";
+import logoFullAsset from "@/assets/wealthia-logo-full.png.asset.json";
 import { LegalFooter } from "@/components/legal-footer";
 
 
@@ -73,9 +73,8 @@ function LoginPage() {
 
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center text-center">
-          <img src={logoAsset.url} alt="Wealthia" className="h-16 w-16 rounded-full" />
-          <h1 className="mt-4 text-2xl font-semibold">{t("app.name")}</h1>
-          <p className="text-xs uppercase tracking-widest text-[var(--muted-foreground)]">{t("app.tagline")}</p>
+          <img src={logoFullAsset.url} alt="Wealthia" className="h-24 w-auto" />
+          <p className="mt-3 text-xs uppercase tracking-widest text-[var(--muted-foreground)]">{t("app.tagline")}</p>
         </div>
         <div className="card-surface p-6">
           <Button onClick={google} variant="outline" className="w-full border-[var(--border)]">

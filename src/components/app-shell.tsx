@@ -72,7 +72,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <aside className="fixed inset-y-0 left-0 z-20 hidden w-[240px] flex-col border-r border-[var(--border)] bg-[var(--card)] px-4 py-6 lg:flex">
         <div className="mb-8 flex items-center gap-3 px-2">
-          <img src={logoAsset.url} alt="Wealthia" className="h-9 w-9 rounded-full" />
+          <img src={logoAsset.url} alt="Wealthia" className="h-8 w-8 rounded-full" />
           <div className="flex-1 min-w-0">
             <div className="text-base font-semibold">{t("app.name")}</div>
             <div className="text-[10px] uppercase tracking-widest text-[var(--muted-foreground)]">{t("app.tagline")}</div>
