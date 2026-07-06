@@ -429,8 +429,8 @@ const translations = {
       advisor: "Advisor",
     },
     home: {
-      hello: "Hello,",
-      overview: "Your financial overview",
+      hello: "Your wealth at a glance",
+      overview: "Track accounts, budgets and investments in one place",
       totalBalance: "Total Balance",
       income: "Income",
       expenses: "Expenses",
