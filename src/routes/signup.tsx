@@ -16,6 +16,17 @@ export const Route = createFileRoute("/signup")({
   ssr: false,
   validateSearch: (s: Record<string, unknown>) => ({ ref: typeof s.ref === "string" ? s.ref : undefined }),
   component: SignupPage,
+  head: () => ({
+    meta: [
+      { title: "Créer un compte — Wealthia" },
+      { name: "description", content: "Créez votre compte Wealthia gratuitement et commencez à piloter votre patrimoine en quelques minutes." },
+      { property: "og:title", content: "Créer un compte — Wealthia" },
+      { property: "og:description", content: "Créez votre compte Wealthia gratuitement et commencez à piloter votre patrimoine en quelques minutes." },
+      { property: "og:url", content: "https://wealthia.lovable.app/signup" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: "https://wealthia.lovable.app/signup" }],
+  }),
 });
 
 function SignupPage() {
@@ -78,7 +89,7 @@ function SignupPage() {
     <div className="flex min-h-screen items-center justify-center px-5">
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center text-center">
-          <img src={logoFullAsset.url} alt="Wealthia" className="h-24 w-auto" />
+          <img src={logoFullAsset.url} alt="Logo Wealthia" className="h-24 w-auto" />
           <h1 className="mt-4 text-2xl font-semibold">{t("auth.signup")}</h1>
           {referralCode && (
             <p className="mt-2 text-xs text-[var(--gold)]">✦ ref: {referralCode}</p>
