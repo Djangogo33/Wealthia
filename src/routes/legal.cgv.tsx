@@ -4,7 +4,16 @@ import { LegalPage, LegalSection } from "@/components/legal-page";
 export const Route = createFileRoute("/legal/cgv")({
   ssr: false,
   component: Page,
-  head: () => ({ meta: [{ title: "CGV — Wealthia" }] }),
+  head: () => ({
+    meta: [
+      { title: "CGV — Wealthia" },
+      { name: "description", content: "Conditions Générales de Vente de Wealthia : offres Gratuit, Pro et Max, paiement, rétractation et renouvellement." },
+      { property: "og:title", content: "CGV — Wealthia" },
+      { property: "og:description", content: "Conditions Générales de Vente de Wealthia : offres Gratuit, Pro et Max, paiement, rétractation et renouvellement." },
+      { property: "og:url", content: "https://wealthia.lovable.app/legal/cgv" },
+    ],
+    links: [{ rel: "canonical", href: "https://wealthia.lovable.app/legal/cgv" }],
+  }),
 });
 
 function Page() {
