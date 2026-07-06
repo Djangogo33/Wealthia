@@ -4,7 +4,16 @@ import { LegalPage, LegalSection } from "@/components/legal-page";
 export const Route = createFileRoute("/legal/mentions-legales")({
   ssr: false,
   component: Page,
-  head: () => ({ meta: [{ title: "Mentions légales — Wealthia" }] }),
+  head: () => ({
+    meta: [
+      { title: "Mentions légales — Wealthia" },
+      { name: "description", content: "Mentions légales de Wealthia : éditeur, directeur de la publication, hébergement et propriété intellectuelle." },
+      { property: "og:title", content: "Mentions légales — Wealthia" },
+      { property: "og:description", content: "Mentions légales de Wealthia : éditeur, directeur de la publication, hébergement et propriété intellectuelle." },
+      { property: "og:url", content: "https://wealthia.lovable.app/legal/mentions-legales" },
+    ],
+    links: [{ rel: "canonical", href: "https://wealthia.lovable.app/legal/mentions-legales" }],
+  }),
 });
 
 function Page() {

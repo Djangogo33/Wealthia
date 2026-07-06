@@ -60,6 +60,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:title", content: "Wealthia — Gestion de Patrimoine" },
       { property: "og:description", content: "Wealthia : gestion de budget et de patrimoine moderne, sécurisée et intelligente." },
       { name: "twitter:description", content: "Wealthia : gestion de budget et de patrimoine moderne, sécurisée et intelligente." },
+      { property: "og:site_name", content: "Wealthia" },
       { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/717b7d03-894f-4e76-a435-a76810b7c5ff" },
       { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/717b7d03-894f-4e76-a435-a76810b7c5ff" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -68,6 +69,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "icon", type: "image/png", href: logoAsset.url },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Wealthia",
+          url: "https://wealthia.lovable.app",
+          logo: `https://wealthia.lovable.app${logoAsset.url}`,
+          description: "Wealthia : gestion de budget et de patrimoine moderne, sécurisée et intelligente.",
+        }),
+      },
     ],
   }),
   shellComponent: RootShell,

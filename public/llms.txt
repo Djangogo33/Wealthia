@@ -1,0 +1,18 @@
+# Wealthia
+
+> Gestion de budget et de patrimoine moderne, sécurisée et intelligente — suivez comptes, transactions, budgets, dettes, abonnements et investissements en un seul endroit.
+
+Wealthia est une application web française de gestion budgétaire et patrimoniale personnelle. Elle propose un mode démo gratuit, des offres Pro et Max, un conseiller IA, et des exports RGPD.
+
+## Pages
+
+- [Accueil](/): présentation de l'application et accès à la démo
+- [Connexion](/login): connexion à un compte existant
+- [Créer un compte](/signup): inscription gratuite
+
+## Légal
+
+- [Mentions légales](/legal/mentions-legales): éditeur, hébergement, propriété intellectuelle
+- [CGU](/legal/cgu): conditions générales d'utilisation
+- [CGV](/legal/cgv): conditions générales de vente et tarifs
+- [Politique de confidentialité](/legal/confidentialite): RGPD, données collectées, droits utilisateurs

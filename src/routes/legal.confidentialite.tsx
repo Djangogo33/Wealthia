@@ -4,7 +4,16 @@ import { LegalPage, LegalSection } from "@/components/legal-page";
 export const Route = createFileRoute("/legal/confidentialite")({
   ssr: false,
   component: Page,
-  head: () => ({ meta: [{ title: "Politique de confidentialité — Wealthia" }] }),
+  head: () => ({
+    meta: [
+      { title: "Politique de confidentialité — Wealthia" },
+      { name: "description", content: "Politique RGPD de Wealthia : données collectées, sous-traitants, durée de conservation et droits utilisateurs." },
+      { property: "og:title", content: "Politique de confidentialité — Wealthia" },
+      { property: "og:description", content: "Politique RGPD de Wealthia : données collectées, sous-traitants, durée de conservation et droits utilisateurs." },
+      { property: "og:url", content: "https://wealthia.lovable.app/legal/confidentialite" },
+    ],
+    links: [{ rel: "canonical", href: "https://wealthia.lovable.app/legal/confidentialite" }],
+  }),
 });
 
 function Page() {

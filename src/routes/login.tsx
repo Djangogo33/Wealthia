@@ -13,7 +13,21 @@ import logoFullAsset from "@/assets/wealthia-logo-full-light.png.asset.json";
 import { LegalFooter } from "@/components/legal-footer";
 
 
-export const Route = createFileRoute("/login")({ ssr: false, component: LoginPage });
+export const Route = createFileRoute("/login")({
+  ssr: false,
+  component: LoginPage,
+  head: () => ({
+    meta: [
+      { title: "Connexion — Wealthia" },
+      { name: "description", content: "Connectez-vous à Wealthia pour suivre vos comptes, budgets et investissements en toute sécurité." },
+      { property: "og:title", content: "Connexion — Wealthia" },
+      { property: "og:description", content: "Connectez-vous à Wealthia pour suivre vos comptes, budgets et investissements en toute sécurité." },
+      { property: "og:url", content: "https://wealthia.lovable.app/login" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: "https://wealthia.lovable.app/login" }],
+  }),
+});
 
 function LoginPage() {
   const { t, lang, setLanguage } = useTranslation();
@@ -73,7 +87,8 @@ function LoginPage() {
 
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center text-center">
-          <img src={logoFullAsset.url} alt="Wealthia" className="h-24 w-auto" />
+          <img src={logoFullAsset.url} alt="Logo Wealthia" className="h-24 w-auto" />
+          <h1 className="mt-4 text-2xl font-semibold">Wealthia — Gestion de Patrimoine</h1>
           <p className="mt-3 text-xs uppercase tracking-widest text-[var(--muted-foreground)]">{t("app.tagline")}</p>
         </div>
         <div className="card-surface p-6">

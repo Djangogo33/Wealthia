@@ -4,7 +4,16 @@ import { LegalPage, LegalSection } from "@/components/legal-page";
 export const Route = createFileRoute("/legal/cgu")({
   ssr: false,
   component: Page,
-  head: () => ({ meta: [{ title: "CGU — Wealthia" }] }),
+  head: () => ({
+    meta: [
+      { title: "CGU — Wealthia" },
+      { name: "description", content: "Conditions Générales d'Utilisation de Wealthia : accès, responsabilités, résiliation et droit applicable." },
+      { property: "og:title", content: "CGU — Wealthia" },
+      { property: "og:description", content: "Conditions Générales d'Utilisation de Wealthia : accès, responsabilités, résiliation et droit applicable." },
+      { property: "og:url", content: "https://wealthia.lovable.app/legal/cgu" },
+    ],
+    links: [{ rel: "canonical", href: "https://wealthia.lovable.app/legal/cgu" }],
+  }),
 });
 
 function Page() {

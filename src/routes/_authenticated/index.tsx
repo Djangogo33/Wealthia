@@ -12,6 +12,29 @@ import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/")({
   component: Accueil,
+  head: () => ({
+    meta: [
+      { title: "Aperçu — Wealthia" },
+      { name: "description", content: "Vue d'ensemble de vos comptes, revenus, dépenses et investissements sur Wealthia." },
+      { property: "og:title", content: "Aperçu — Wealthia" },
+      { property: "og:description", content: "Vue d'ensemble de vos comptes, revenus, dépenses et investissements sur Wealthia." },
+      { property: "og:url", content: "https://wealthia.lovable.app/" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [{ rel: "canonical", href: "https://wealthia.lovable.app/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Wealthia",
+          url: "https://wealthia.lovable.app",
+          description: "Gestion de budget et de patrimoine moderne, sécurisée et intelligente.",
+        }),
+      },
+    ],
+  }),
 });
 
 const ICON_BY_TYPE: Record<string, typeof CreditCard> = {
