@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /settings
+Disallow: /conseiller
+Disallow: /export
+Disallow: /reports
+
+Sitemap: https://wealthia.lovable.app/sitemap.xml
