@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import logoAsset from "@/assets/wealthia-logo.png.asset.json";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Settings as SettingsIcon, Copy, Share2, LogOut, Globe, Trash2, Download } from "lucide-react";
@@ -182,7 +183,10 @@ function SettingsPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 pb-12 pt-6">
-      <h1 className="mb-6 text-2xl font-semibold text-[var(--gold)]">{t("settings.title")}</h1>
+      <div className="mb-6 flex items-center gap-3">
+        <img src={logoAsset.url} alt="Wealthia" className="h-8 w-8 rounded-full" />
+        <h1 className="text-2xl font-semibold text-[var(--gold)]">{t("settings.title")}</h1>
+      </div>
 
       {/* Profile */}
       <section className="card-surface mb-4 p-5">
