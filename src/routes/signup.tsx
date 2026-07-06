@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import logoAsset from "@/assets/wealthia-logo.png.asset.json";
+import logoFullAsset from "@/assets/wealthia-logo-full.png.asset.json";
 import { LegalFooter } from "@/components/legal-footer";
 
 
@@ -78,7 +78,7 @@ function SignupPage() {
     <div className="flex min-h-screen items-center justify-center px-5">
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center text-center">
-          <img src={logoAsset.url} alt="Wealthia" className="h-16 w-16 rounded-full" />
+          <img src={logoFullAsset.url} alt="Wealthia" className="h-24 w-auto" />
           <h1 className="mt-4 text-2xl font-semibold">{t("auth.signup")}</h1>
           {referralCode && (
             <p className="mt-2 text-xs text-[var(--gold)]">✦ ref: {referralCode}</p>
