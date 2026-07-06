@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import logoFullAsset from "@/assets/wealthia-logo-full.png.asset.json";
+import logoFullAsset from "@/assets/wealthia-logo-full-light.png.asset.json";
 import { LegalFooter } from "@/components/legal-footer";
 
 
