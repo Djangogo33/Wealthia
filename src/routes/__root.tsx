@@ -61,14 +61,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "Wealthia : gestion de budget et de patrimoine moderne, sécurisée et intelligente." },
       { name: "twitter:description", content: "Wealthia : gestion de budget et de patrimoine moderne, sécurisée et intelligente." },
       { property: "og:site_name", content: "Wealthia" },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/717b7d03-894f-4e76-a435-a76810b7c5ff" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/717b7d03-894f-4e76-a435-a76810b7c5ff" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/W11kkYwLj6bhOueDwGsCCeaGEF13/social-images/social-1784808638558-Wealthia_social_image.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/W11kkYwLj6bhOueDwGsCCeaGEF13/social-images/social-1784808638558-Wealthia_social_image.webp" },
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:type", content: "website" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", type: "image/png", href: logoAsset.url },
     ],
     scripts: [
       {
